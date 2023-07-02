@@ -41,7 +41,7 @@
             // 
             textUser.Location = new Point(75, 16);
             textUser.Name = "textUser";
-            textUser.Size = new Size(100, 23);
+            textUser.Size = new Size(264, 23);
             textUser.TabIndex = 0;
             textUser.TextChanged += textBox1_TextChanged;
             // 
@@ -49,15 +49,15 @@
             // 
             fakeBox.Location = new Point(75, 52);
             fakeBox.Name = "fakeBox";
-            fakeBox.PasswordChar = '*';
-            fakeBox.Size = new Size(100, 23);
+            fakeBox.Size = new Size(264, 23);
             fakeBox.TabIndex = 1;
             // 
             // textPass
             // 
             textPass.Location = new Point(75, 52);
             textPass.Name = "textPass";
-            textPass.Size = new Size(100, 23);
+            textPass.PasswordChar = '&';
+            textPass.Size = new Size(264, 23);
             textPass.TabIndex = 2;
             textPass.TextChanged += textPass_TextChanged;
             textPass.Enter += textPass_Enter;
@@ -80,31 +80,33 @@
             passLabel.Size = new Size(57, 15);
             passLabel.TabIndex = 4;
             passLabel.Text = "Password";
-            passLabel.Click += passLabel_Click;
             // 
             // addUser
             // 
             addUser.Location = new Point(12, 102);
             addUser.Name = "addUser";
-            addUser.Size = new Size(163, 23);
+            addUser.Size = new Size(327, 23);
             addUser.TabIndex = 5;
             addUser.Text = "add User";
             addUser.UseVisualStyleBackColor = true;
+            addUser.Click += addUser_Click;
             // 
             // passReset
             // 
             passReset.Location = new Point(12, 131);
             passReset.Name = "passReset";
-            passReset.Size = new Size(163, 23);
+            passReset.Size = new Size(327, 23);
             passReset.TabIndex = 6;
             passReset.Text = "restet Password";
             passReset.UseVisualStyleBackColor = true;
+            passReset.Click += passReset_Click;
             // 
             // enterApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(193, 166);
+            ClientSize = new Size(351, 166);
+            ControlBox = false;
             Controls.Add(passReset);
             Controls.Add(addUser);
             Controls.Add(passLabel);
@@ -112,10 +114,10 @@
             Controls.Add(textPass);
             Controls.Add(fakeBox);
             Controls.Add(textUser);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "enterApp";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Login for very usefull aplication";
-            Deactivate += enterApp_Deactivate;
             FormClosing += enterApp_FormClosing;
             ResumeLayout(false);
             PerformLayout();

@@ -12,6 +12,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         private bool passFocus;
         private string user { get; set; }
         private string _password;
+        private bool validPass;
         public string password
         {
             get { return _password; }
@@ -50,24 +51,20 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 
         private void passwordCheck()//dajemy nazwe użytkownika do bazy a ona zwraca hasło i porównujemy to ze sobą, wiem że trzymanie raw hasła to idiotyzm ale coż, na razie to jest wersja pre pre
         {
-            // nasza baza DESKTOP-AI71G3Q
-
             using (var connect = new myDataContex(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true"))
             {
-
                 password = coder(password);
                 if (!connect.usersData.Any(e => (e.name.Trim() == user && e.pass == password)))
                 {
-                    MessageBox.Show(user);//"chłopaki już jadą ;)"
+                    MessageBox.Show("chłopaki już jadą ;)");
                     Application.Exit();
                 }
             }
+            validPass = true;
             passFocus = true;
             myMainApp.Show();
             this.Close();
-
         }
-
         private void keyCheck(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -77,28 +74,26 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         }
         public async Task pog()
         {
+            char[] signs = { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '}', '{', '"', ':', '?', '>', '<', '|', '\\', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
             while (true)
             {
+                fakeBox.Text = "";
                 if (passFocus)
                 {
                     return;
                 }
                 Random random = new Random();
-                fakeBox.Text = new string('a', random.Next(0, 12));
-                await Task.Delay(30);
+                for (int i = 0; i < random.Next(0, 60); i++)
+                {
+                    fakeBox.Text += signs[random.Next(0, 31)];
+                }
+                await Task.Delay(50);
             }
         }
-
-        private void passLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             user = textUser.Text;
         }
-
         private void textPass_Enter(object sender, EventArgs e)
         {
             passFocus = false;
@@ -106,12 +101,10 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             textPass.Visible = false;
             new Thread(() => { pog(); }).Start();
         }
-
         private void textPass_TextChanged(object sender, EventArgs e)
         {
             password = textPass.Text;
         }
-
         private void textPass_Leave(object sender, EventArgs e)
         {
             textPass.Text = "";
@@ -119,7 +112,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             fakeBox.Visible = false;
             textPass.Visible = true;
         }
-
         public class myDataContex : DbContext
         {
             public myDataContex(string connecionString) : base(connecionString)
@@ -134,14 +126,23 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             public string pass { get; set; }
         }
 
-        private void enterApp_Deactivate(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
         private void enterApp_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            if (!validPass)
+            {
+                Application.Exit();
+            }
+
+        }
+
+        private void addUser_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("proszę skontaktowac sie z administratorem :)");
+        }
+
+        private void passReset_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("tak jak na ulicy, czasu nie cofniesz, powodzenia w zgadywaniu :)");
         }
     }
 }
