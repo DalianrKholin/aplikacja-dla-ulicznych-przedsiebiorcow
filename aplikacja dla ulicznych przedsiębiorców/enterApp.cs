@@ -1,8 +1,6 @@
 using System.Data.Entity;
 using System.Security.Cryptography;
-using System.Security.Permissions;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace aplikacja_dla_ulicznych_przedsiębiorców
 {
@@ -13,6 +11,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         private string user { get; set; }
         private string _password;
         private bool validPass;
+        private short badPassCounter = 0;
         public string password
         {
             get { return _password; }
@@ -56,13 +55,24 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 password = coder(password);
                 if (!connect.usersData.Any(e => (e.name.Trim() == user && e.pass == password)))
                 {
-                    MessageBox.Show("chłopaki już jadą ;)");
-                    Application.Exit();
+                    if (badPassCounter < 5)
+                    {
+                        passwordInfo.Text = "błędne hasło proszimy o podaniie go jeszcze raz";
+                        badPassCounter++;
+                        passwordInfo.Visible = true;
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+                    return;
                 }
+                
             }
             validPass = true;
             passFocus = true;
             myMainApp.Show();
+            myMainApp.username = user;
             this.Close();
         }
         private void keyCheck(object sender, KeyEventArgs e)
@@ -112,14 +122,14 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             fakeBox.Visible = false;
             textPass.Visible = true;
         }
-        public class myDataContex : DbContext
+        internal class myDataContex : DbContext
         {
             public myDataContex(string connecionString) : base(connecionString)
             { }
             public myDataContex() { }
             public DbSet<data> usersData { get; set; }
         }
-        public class data
+        internal class data
         {
             public int ID { get; set; }
             public string name { get; set; }
@@ -143,6 +153,11 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         private void passReset_Click(object sender, EventArgs e)
         {
             MessageBox.Show("tak jak na ulicy, czasu nie cofniesz, powodzenia w zgadywaniu :)");
+        }
+
+        private void passwordInfo_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

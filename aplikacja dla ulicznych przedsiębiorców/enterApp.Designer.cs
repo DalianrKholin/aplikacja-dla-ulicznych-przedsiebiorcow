@@ -35,6 +35,7 @@
             passLabel = new Label();
             addUser = new Button();
             passReset = new Button();
+            passwordInfo = new TextBox();
             SuspendLayout();
             // 
             // textUser
@@ -83,7 +84,7 @@
             // 
             // addUser
             // 
-            addUser.Location = new Point(12, 102);
+            addUser.Location = new Point(12, 110);
             addUser.Name = "addUser";
             addUser.Size = new Size(327, 23);
             addUser.TabIndex = 5;
@@ -93,7 +94,7 @@
             // 
             // passReset
             // 
-            passReset.Location = new Point(12, 131);
+            passReset.Location = new Point(12, 142);
             passReset.Name = "passReset";
             passReset.Size = new Size(327, 23);
             passReset.TabIndex = 6;
@@ -101,12 +102,25 @@
             passReset.UseVisualStyleBackColor = true;
             passReset.Click += passReset_Click;
             // 
+            // passwordInfo
+            // 
+            passwordInfo.ForeColor = Color.Crimson;
+            passwordInfo.Location = new Point(12, 81);
+            passwordInfo.Name = "passwordInfo";
+            passwordInfo.ReadOnly = true;
+            passwordInfo.Size = new Size(327, 23);
+            passwordInfo.TabIndex = 7;
+            passwordInfo.TextAlign = HorizontalAlignment.Center;
+            passwordInfo.Visible = false;
+            passwordInfo.TextChanged += passwordInfo_TextChanged;
+            // 
             // enterApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(351, 166);
+            ClientSize = new Size(351, 177);
             ControlBox = false;
+            Controls.Add(passwordInfo);
             Controls.Add(passReset);
             Controls.Add(addUser);
             Controls.Add(passLabel);
@@ -132,5 +146,6 @@
         private Label passLabel;
         private Button addUser;
         private Button passReset;
+        private TextBox passwordInfo;
     }
 }
