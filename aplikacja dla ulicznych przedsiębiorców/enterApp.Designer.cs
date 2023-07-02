@@ -114,7 +114,9 @@
             Controls.Add(textUser);
             Name = "enterApp";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Form1";
+            Text = "Login for very usefull aplication";
+            Deactivate += enterApp_Deactivate;
+            FormClosing += enterApp_FormClosing;
             ResumeLayout(false);
             PerformLayout();
         }
