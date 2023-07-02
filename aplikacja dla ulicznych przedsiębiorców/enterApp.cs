@@ -48,17 +48,16 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         }
 
 
-        private void passwordCheck()//dajemy nazwe użytkownika do bazy a ona zwraca hasło i porównujemy to ze sobą, wiem że trzymanie raw hasła to idiotyzm ale coż, na razie to jest wersja pre pre
+        private void passwordCheck()
         {
             using (var connect = new myDataContex(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true"))
             {
                 password = coder(password);
                 if (!connect.usersData.Any(e => (e.name.Trim() == user && e.pass == password)))
                 {
-                    if (badPassCounter < 5)
+                    if (badPassCounter++ < 5)
                     {
                         passwordInfo.Text = "błędne hasło proszimy o podaniie go jeszcze raz";
-                        badPassCounter++;
                         passwordInfo.Visible = true;
                     }
                     else
