@@ -7,6 +7,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 {
     public partial class VirtualForm : Form
     {
+        protected myDataContexUsers userConnection;
         protected string user { get; set; }
         protected string _password;
         protected string password
@@ -33,6 +34,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         public VirtualForm()
         {
             this.InitializeComponent();
+            textPass.KeyDown += new KeyEventHandler(keyCheck);
         }
 
         virtual protected void AcceptButton_Click(object sender, EventArgs e)

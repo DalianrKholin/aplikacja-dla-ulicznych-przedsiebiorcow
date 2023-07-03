@@ -16,9 +16,9 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
     {
         public bool isAdmin { get; set; }
         private string connectS = string.Empty;
-        private Thread acctive;
         private string _name;
-        internal myDataContexData connect;
+        internal myDataContexData dataConnect;
+        public myDataContexUsers userConnect; 
         public string username
         {
             get { return _name; }
@@ -31,12 +31,13 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 
         public mainApp()
         {
-            enterApp login = new enterApp(this);
-
+            
+            userConnect = new myDataContexUsers(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true");
+            enterApp login = new enterApp(this, userConnect);
             InitializeComponent();
             login.ShowDialog();
             connectS = @"server=DESKTOP-AI71G3Q;database=placeholder;integrated security=true".Replace("placeholder", (username + "Data"));
-            connect = new myDataContexData(connectS);
+            dataConnect = new myDataContexData(connectS);
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -62,9 +63,9 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             wyzerować wszystkie zmienne a potem otworzyć ponownie okno logowania
              */
             this.Hide();
-            new enterApp(this).ShowDialog();
+            new enterApp(this, userConnect).ShowDialog();
             connectS = @"server=DESKTOP-AI71G3Q;database=placeholder;integrated security=true".Replace("placeholder", (username + "Data"));
-            connect = new myDataContexData(connectS);
+            dataConnect = new myDataContexData(connectS);
         }
 
         private void date_Validated(object sender, EventArgs e)
@@ -83,7 +84,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         {
             if (isAdmin)
             {
-                MessageBox.Show("");
+                new AddUser(userConnect).ShowDialog();
             }
         }
         private void button3_Click(object sender, EventArgs e)
@@ -94,12 +95,12 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         {
             try
             {
-                if (connect.locals.Any(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocaNr.Text)))
+                if (dataConnect.locals.Any(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocaNr.Text)))
                 {
                     MessageBox.Show("ten lokal aktualnie istnieje w bazie");
                     return;
                 }
-                connect.locals.Add(new lokale
+                dataConnect.locals.Add(new lokale
                 {
 
                     name = textNewLocalName.Text,
@@ -108,7 +109,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     panishment = textNewLocalPanishment.Text == "" ? null : textNewLocalPanishment.Text,
                     tribiute = Convert.ToInt32(textNewLocalTribiute.Text)
                 });
-                connect.SaveChanges();
+                dataConnect.SaveChanges();
 
             }
             catch (Exception e)

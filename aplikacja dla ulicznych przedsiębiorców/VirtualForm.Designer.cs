@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            RejectButton = new Button();
+            rejectButton = new Button();
             label1 = new Label();
             label2 = new Label();
             textUser = new TextBox();
@@ -40,12 +40,12 @@
             // 
             // RejectButton
             // 
-            RejectButton.Location = new Point(12, 122);
-            RejectButton.Name = "RejectButton";
-            RejectButton.Size = new Size(476, 23);
-            RejectButton.TabIndex = 0;
-            RejectButton.UseVisualStyleBackColor = true;
-            RejectButton.Click += RejectButton_Click;
+            rejectButton.Location = new Point(12, 122);
+            rejectButton.Name = "RejectButton";
+            rejectButton.Size = new Size(476, 23);
+            rejectButton.TabIndex = 0;
+            rejectButton.UseVisualStyleBackColor = true;
+            rejectButton.Click += RejectButton_Click;
             // 
             // label1
             // 
@@ -123,7 +123,7 @@
             Controls.Add(textUser);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(RejectButton);
+            Controls.Add(rejectButton);
             Name = "VirtualForm";
             Text = "VirtualForm";
             ResumeLayout(false);
@@ -133,7 +133,7 @@
         #endregion
         private Label label1;
         private Label label2;
-        protected Button RejectButton;
+        protected Button rejectButton;
         protected TextBox textUser;
         protected Button acceptButton;
         protected TextBox passwordInfo;
