@@ -138,7 +138,7 @@
             // addNewUserToolStripMenuItem
             // 
             addNewUserToolStripMenuItem.Name = "addNewUserToolStripMenuItem";
-            addNewUserToolStripMenuItem.Size = new Size(141, 22);
+            addNewUserToolStripMenuItem.Size = new Size(180, 22);
             addNewUserToolStripMenuItem.Text = "addNewUser";
             addNewUserToolStripMenuItem.Click += addNewUserToolStripMenuItem_Click;
             // 

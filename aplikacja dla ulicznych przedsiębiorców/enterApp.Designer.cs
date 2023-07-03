@@ -28,106 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textUser = new TextBox();
-            fakeBox = new TextBox();
-            textPass = new TextBox();
-            userLabel = new Label();
-            passLabel = new Label();
-            addUser = new Button();
-            passReset = new Button();
-            passwordInfo = new TextBox();
             SuspendLayout();
-            // 
-            // textUser
-            // 
-            textUser.Location = new Point(75, 16);
-            textUser.Name = "textUser";
-            textUser.Size = new Size(264, 23);
-            textUser.TabIndex = 0;
-            textUser.TextChanged += textBox1_TextChanged;
-            // 
-            // fakeBox
-            // 
-            fakeBox.Location = new Point(75, 52);
-            fakeBox.Name = "fakeBox";
-            fakeBox.Size = new Size(264, 23);
-            fakeBox.TabIndex = 1;
-            // 
-            // textPass
-            // 
-            textPass.Location = new Point(75, 52);
-            textPass.Name = "textPass";
-            textPass.PasswordChar = '&';
-            textPass.Size = new Size(264, 23);
-            textPass.TabIndex = 2;
-            textPass.TextChanged += textPass_TextChanged;
-            textPass.Enter += textPass_Enter;
-            textPass.Leave += textPass_Leave;
-            // 
-            // userLabel
-            // 
-            userLabel.AutoSize = true;
-            userLabel.Location = new Point(9, 19);
-            userLabel.Name = "userLabel";
-            userLabel.Size = new Size(60, 15);
-            userLabel.TabIndex = 3;
-            userLabel.Text = "Username";
-            // 
-            // passLabel
-            // 
-            passLabel.AutoSize = true;
-            passLabel.Location = new Point(12, 52);
-            passLabel.Name = "passLabel";
-            passLabel.Size = new Size(57, 15);
-            passLabel.TabIndex = 4;
-            passLabel.Text = "Password";
-            // 
-            // addUser
-            // 
-            addUser.Location = new Point(12, 110);
-            addUser.Name = "addUser";
-            addUser.Size = new Size(327, 23);
-            addUser.TabIndex = 5;
-            addUser.Text = "add User";
-            addUser.UseVisualStyleBackColor = true;
-            addUser.Click += addUser_Click;
-            // 
-            // passReset
-            // 
-            passReset.Location = new Point(12, 142);
-            passReset.Name = "passReset";
-            passReset.Size = new Size(327, 23);
-            passReset.TabIndex = 6;
-            passReset.Text = "restet Password";
-            passReset.UseVisualStyleBackColor = true;
-            passReset.Click += passReset_Click;
-            // 
-            // passwordInfo
-            // 
-            passwordInfo.ForeColor = Color.Crimson;
-            passwordInfo.Location = new Point(12, 81);
-            passwordInfo.Name = "passwordInfo";
-            passwordInfo.ReadOnly = true;
-            passwordInfo.Size = new Size(327, 23);
-            passwordInfo.TabIndex = 7;
-            passwordInfo.TextAlign = HorizontalAlignment.Center;
-            passwordInfo.Visible = false;
-            passwordInfo.TextChanged += passwordInfo_TextChanged;
             // 
             // enterApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(351, 177);
+            ClientSize = new Size(498, 153);
             ControlBox = false;
-            Controls.Add(passwordInfo);
-            Controls.Add(passReset);
-            Controls.Add(addUser);
-            Controls.Add(passLabel);
-            Controls.Add(userLabel);
-            Controls.Add(textPass);
-            Controls.Add(fakeBox);
-            Controls.Add(textUser);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "enterApp";
             StartPosition = FormStartPosition.CenterParent;
@@ -138,14 +46,5 @@
         }
 
         #endregion
-
-        private TextBox textUser;
-        private TextBox fakeBox;
-        private TextBox textPass;
-        private Label userLabel;
-        private Label passLabel;
-        private Button addUser;
-        private Button passReset;
-        private TextBox passwordInfo;
     }
 }
