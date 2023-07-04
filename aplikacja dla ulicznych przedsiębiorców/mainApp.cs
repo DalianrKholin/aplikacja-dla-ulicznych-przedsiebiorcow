@@ -18,6 +18,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
     {
         private int lastMove;
         private Thread session;
+        private bool sessionStoper;
         public bool isAdmin { get; set; }
         private string connectS = string.Empty;
         private string _name;
@@ -25,6 +26,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         public myDataContexUsers userConnect;
         public List<TextBox> toZero = new List<TextBox>();
         public data usersData;
+        private List<Thread> threadsData = new List<Thread>(); //marna próba zapanowania nad threadami
         private Queue<Message> qMessage = new Queue<Message>();
         private List<TextBox> messagesTextBoxList = new List<TextBox>();
         private List<Label> messagesLabelList = new List<Label>();
@@ -69,15 +71,17 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         }
         private async Task inicjalizeComboAndNewMessages()
         {
-
+            usersData=userConnect.usersData.Single(e=> e.name==username);
+            usersList.Items.Clear();
             foreach (var item in userConnect.usersData)
             {
                 usersList.Items.Add(item.name);
             }
-            foreach (var item in userConnect.messages.Where(e => e.recipient.name == usersData.name && e.ID > usersData.messageCounter).ToList())
+            foreach (var item in userConnect.messages.Where(e => e.recipient.name == usersData.name && e.ID >= usersData.messageCounter))
             {
                 qMessage.Enqueue(item);
             }
+            messageTaken.Text = "new messages = " + qMessage.Count.ToString();
             for (int i = 0; i < 5; i++)
             {
                 if (qMessage.Count == 0)
@@ -105,7 +109,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             zamknąc połaczenie z bazą, pozapisywać wszystko
             wyzerować wszystkie zmienne a potem otworzyć ponownie okno logowania
              */
-            session.Interrupt();
+            sessionStoper = true;
             foreach (var z in toZero)
             {
                 z.Text = "";
@@ -114,7 +118,9 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             this.Hide();
             new enterApp(this, userConnect).ShowDialog();
             lastMove = 120;
+            sessionStoper = false;
             session = new Thread(() => focusSession());
+            new Thread(() => { inicjalizeComboAndNewMessages(); }).Start();
             session.Start();
 
         }
@@ -130,7 +136,13 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         {
             if (isAdmin)
             {
+                sessionStoper = true;
                 new AddUser(userConnect).ShowDialog();
+                lastMove = 120;
+                sessionStoper=false;
+                new Thread(() => { inicjalizeComboAndNewMessages(); }).Start();
+                session = new Thread(() => focusSession());
+                session.Start();
             }
         }
         internal async Task addToDataBase()
@@ -189,6 +201,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         {
             while (lastMove-- > 0)
             {
+                if (sessionStoper) return;
                 logoutTimew.Text = lastMove.ToString();
                 await Task.Delay(1000);
             }

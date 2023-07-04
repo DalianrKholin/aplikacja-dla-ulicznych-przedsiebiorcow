@@ -38,14 +38,14 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     recipient = id,
                     sender = id
                 });
-                userConnection.SaveChanges();
-                var newMes = userConnection.messages.First(e => (e.item == "hello new user welcome on our application for street bisnesman"));
-                id.messageCounter = newMes.ID;
+                id.messageCounter =0;
                 userConnection.SaveChanges();
                 passwordInfo.Text = "udało się dodać uzytkownika";
-                return;
             }
-            catch(Exception e) { MessageBox.Show(e.ToString()); }
+            catch(Exception e) {
+                MessageBox.Show(e.ToString()); 
+            }
+
         }
 
         public AddUser(myDataContexUsers call)
