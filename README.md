@@ -5,7 +5,8 @@ aplikacja-dla-ulicznych-przedsiębiorców jest pomocą dla zaradnych ulicznych p
 
 podstawowe funkcje:
 
-- panel przypominający o wszczęciu rozboju w konkretnej miejscówce
-- możliwości dodawania nowych miejsc w których jest zapewniona ochrona, lub jej nie ma
-- prosty kalkulator podsumywujący miesięczne zyski razem z kalkulatorem podatków dla lokalnych szefów
-- wszystko zahasłowane i zaszyfrowane(tylko jeszcze nie wiem jak to zrobić bo za głupi na to jestem) aby kurwy ze skarbówki(lub inne nieprzychylne osoby) nie dopadły naszego klienta 
+- możliwośc wysyłania wiadomości innym użytkownikom :processing:
+- panel przypominający o wszczęciu rozboju w konkretnej miejscówce :processing:
+- możliwości dodawania nowych miejsc w których jest zapewniona ochrona, lub jej nie ma :done:
+- prosty kalkulator podsumywujący miesięczne zyski razem z kalkulatorem podatków dla lokalnych szefów(ten pukt się jeszcze zmieni) :toChange:
+- wszystko zahasłowane i zaszyfrowane aby inne nieprzychylne osoby nie dopadły naszego klienta :done:
