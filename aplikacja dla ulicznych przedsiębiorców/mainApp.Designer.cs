@@ -67,7 +67,7 @@
             rejectButton = new Button();
             randomData = new Button();
             textNewLocalStreet = new TextBox();
-            textNewLocaNr = new TextBox();
+            textNewLocalNr = new TextBox();
             textNewLocalTribiute = new TextBox();
             textNewLocalPanishment = new TextBox();
             textNewLocalName = new TextBox();
@@ -78,6 +78,11 @@
             newLocalName = new Label();
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
+            sendMessage = new Button();
+            label6 = new Label();
+            label4 = new Label();
+            usersList = new ComboBox();
+            messageToUser = new RichTextBox();
             groupBox3 = new GroupBox();
             label3 = new Label();
             logoutTimew = new Label();
@@ -86,6 +91,7 @@
             menuStrip1.SuspendLayout();
             toDoList.SuspendLayout();
             newLokal.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // labelUser
@@ -279,7 +285,6 @@
             toDo3.TabIndex = 11;
             toDo3.Text = "button12";
             toDo3.UseVisualStyleBackColor = true;
-            toDo3.Click += button12_Click;
             // 
             // toDo4
             // 
@@ -298,7 +303,6 @@
             toDo5.TabIndex = 9;
             toDo5.Text = "button10";
             toDo5.UseVisualStyleBackColor = true;
-            toDo5.Click += button10_Click;
             // 
             // toDo6
             // 
@@ -406,7 +410,7 @@
             newLokal.Controls.Add(rejectButton);
             newLokal.Controls.Add(randomData);
             newLokal.Controls.Add(textNewLocalStreet);
-            newLokal.Controls.Add(textNewLocaNr);
+            newLokal.Controls.Add(textNewLocalNr);
             newLokal.Controls.Add(textNewLocalTribiute);
             newLokal.Controls.Add(textNewLocalPanishment);
             newLokal.Controls.Add(textNewLocalName);
@@ -468,12 +472,12 @@
             textNewLocalStreet.Size = new Size(440, 23);
             textNewLocalStreet.TabIndex = 9;
             // 
-            // textNewLocaNr
+            // textNewLocalNr
             // 
-            textNewLocaNr.Location = new Point(100, 123);
-            textNewLocaNr.Name = "textNewLocaNr";
-            textNewLocaNr.Size = new Size(440, 23);
-            textNewLocaNr.TabIndex = 8;
+            textNewLocalNr.Location = new Point(100, 123);
+            textNewLocalNr.Name = "textNewLocalNr";
+            textNewLocalNr.Size = new Size(440, 23);
+            textNewLocalNr.TabIndex = 8;
             // 
             // textNewLocalTribiute
             // 
@@ -552,12 +556,61 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(sendMessage);
+            groupBox2.Controls.Add(label6);
+            groupBox2.Controls.Add(label4);
+            groupBox2.Controls.Add(usersList);
+            groupBox2.Controls.Add(messageToUser);
             groupBox2.Location = new Point(12, 358);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(413, 297);
             groupBox2.TabIndex = 8;
             groupBox2.TabStop = false;
             groupBox2.Text = "wyślij wiadomość do użytkownika";
+            // 
+            // sendMessage
+            // 
+            sendMessage.Location = new Point(332, 270);
+            sendMessage.Name = "sendMessage";
+            sendMessage.Size = new Size(75, 23);
+            sendMessage.TabIndex = 4;
+            sendMessage.Text = "wyślij";
+            sendMessage.UseVisualStyleBackColor = true;
+            sendMessage.Click += sendMessage_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(6, 85);
+            label6.Name = "label6";
+            label6.Size = new Size(68, 15);
+            label6.TabIndex = 3;
+            label6.Text = "wiadomość";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(6, 24);
+            label4.Name = "label4";
+            label4.Size = new Size(116, 15);
+            label4.TabIndex = 2;
+            label4.Text = "wybierz użytkownika";
+            // 
+            // usersList
+            // 
+            usersList.FormattingEnabled = true;
+            usersList.Location = new Point(6, 49);
+            usersList.Name = "usersList";
+            usersList.Size = new Size(401, 23);
+            usersList.TabIndex = 1;
+            // 
+            // messageToUser
+            // 
+            messageToUser.Location = new Point(6, 102);
+            messageToUser.Name = "messageToUser";
+            messageToUser.Size = new Size(401, 162);
+            messageToUser.TabIndex = 0;
+            messageToUser.Text = "";
             // 
             // groupBox3
             // 
@@ -634,6 +687,8 @@
             toDoList.ResumeLayout(false);
             newLokal.ResumeLayout(false);
             newLokal.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -675,7 +730,7 @@
         private ToolStripMenuItem addNewUserToolStripMenuItem;
         private GroupBox newLokal;
         private TextBox textNewLocalStreet;
-        private TextBox textNewLocaNr;
+        private TextBox textNewLocalNr;
         private TextBox textNewLocalTribiute;
         private TextBox textNewLocalPanishment;
         private TextBox textNewLocalName;
@@ -697,5 +752,10 @@
         private Label logoutTimew;
         private Label label5;
         private Label monthlyIncome;
+        private Button sendMessage;
+        private Label label6;
+        private Label label4;
+        private ComboBox usersList;
+        private RichTextBox messageToUser;
     }
 }

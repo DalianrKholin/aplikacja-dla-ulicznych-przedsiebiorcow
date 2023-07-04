@@ -27,7 +27,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         {
 
                 password = coder(password);
-
                 if (!userConnection.usersData.Any(e => (e.name.Trim() == user && e.pass == password)))
                 {
                     textPass.Text = "";
@@ -43,8 +42,8 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     }
                     return;
                 }
-
-                myMainApp.isAdmin = userConnection.usersData.Single(e => (e.name == user)).adminPass;
+                myMainApp.usersData = userConnection.usersData.Single(e => (e.name == user));
+                myMainApp.isAdmin = myMainApp.usersData.adminPass;
             
             passFocus = true;
             validPass = true;
