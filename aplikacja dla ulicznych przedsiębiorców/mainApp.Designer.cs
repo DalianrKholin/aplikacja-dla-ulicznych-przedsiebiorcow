@@ -62,6 +62,7 @@
             label1 = new Label();
             date = new Label();
             newLokal = new GroupBox();
+            button3 = new Button();
             acceptButton = new Button();
             rejectButton = new Button();
             randomData = new Button();
@@ -75,6 +76,13 @@
             newLocalAdressNumber = new Label();
             newLocalStreet = new Label();
             newLocalName = new Label();
+            groupBox1 = new GroupBox();
+            groupBox2 = new GroupBox();
+            groupBox3 = new GroupBox();
+            label3 = new Label();
+            logoutTimew = new Label();
+            label5 = new Label();
+            monthlyIncome = new Label();
             menuStrip1.SuspendLayout();
             toDoList.SuspendLayout();
             newLokal.SuspendLayout();
@@ -138,7 +146,7 @@
             // addNewUserToolStripMenuItem
             // 
             addNewUserToolStripMenuItem.Name = "addNewUserToolStripMenuItem";
-            addNewUserToolStripMenuItem.Size = new Size(180, 22);
+            addNewUserToolStripMenuItem.Size = new Size(141, 22);
             addNewUserToolStripMenuItem.Text = "addNewUser";
             addNewUserToolStripMenuItem.Click += addNewUserToolStripMenuItem_Click;
             // 
@@ -393,6 +401,7 @@
             // 
             // newLokal
             // 
+            newLokal.Controls.Add(button3);
             newLokal.Controls.Add(acceptButton);
             newLokal.Controls.Add(rejectButton);
             newLokal.Controls.Add(randomData);
@@ -413,11 +422,21 @@
             newLokal.TabStop = false;
             newLokal.Text = "dodaj nowy lokal przedsiębiorco";
             // 
+            // button3
+            // 
+            button3.Location = new Point(6, 247);
+            button3.Name = "button3";
+            button3.Size = new Size(109, 50);
+            button3.TabIndex = 7;
+            button3.Text = "wczytaj zmiany do bazy danych";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click_1;
+            // 
             // acceptButton
             // 
-            acceptButton.Location = new Point(6, 247);
+            acceptButton.Location = new Point(144, 247);
             acceptButton.Name = "acceptButton";
-            acceptButton.Size = new Size(162, 49);
+            acceptButton.Size = new Size(109, 50);
             acceptButton.TabIndex = 14;
             acceptButton.Text = "zaakceptuj zmiany";
             acceptButton.UseVisualStyleBackColor = true;
@@ -425,18 +444,19 @@
             // 
             // rejectButton
             // 
-            rejectButton.Location = new Point(378, 247);
+            rejectButton.Location = new Point(417, 247);
             rejectButton.Name = "rejectButton";
-            rejectButton.Size = new Size(162, 49);
+            rejectButton.Size = new Size(109, 50);
             rejectButton.TabIndex = 13;
             rejectButton.Text = "porzuć zmiany";
             rejectButton.UseVisualStyleBackColor = true;
+            rejectButton.Click += rejectButton_Click;
             // 
             // randomData
             // 
-            randomData.Location = new Point(192, 247);
+            randomData.Location = new Point(281, 247);
             randomData.Name = "randomData";
-            randomData.Size = new Size(162, 49);
+            randomData.Size = new Size(109, 50);
             randomData.TabIndex = 12;
             randomData.Text = "wygeneruj losowe";
             randomData.UseVisualStyleBackColor = true;
@@ -521,11 +541,81 @@
             newLocalName.TabIndex = 0;
             newLocalName.Text = "nazwa lokalu";
             // 
+            // groupBox1
+            // 
+            groupBox1.Location = new Point(564, 50);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(510, 302);
+            groupBox1.TabIndex = 7;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "dodaj jakieś zwykłe akcje";
+            // 
+            // groupBox2
+            // 
+            groupBox2.Location = new Point(12, 358);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(413, 297);
+            groupBox2.TabIndex = 8;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "wyślij wiadomość do użytkownika";
+            // 
+            // groupBox3
+            // 
+            groupBox3.Location = new Point(431, 358);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(643, 297);
+            groupBox3.TabIndex = 9;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "jak wyglądają zasoby grupy";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(355, 24);
+            label3.Name = "label3";
+            label3.Size = new Size(132, 15);
+            label3.TabIndex = 10;
+            label3.Text = "wylogowanie nastapi za";
+            // 
+            // logoutTimew
+            // 
+            logoutTimew.AutoSize = true;
+            logoutTimew.Location = new Point(493, 24);
+            logoutTimew.Name = "logoutTimew";
+            logoutTimew.Size = new Size(38, 15);
+            logoutTimew.TabIndex = 11;
+            logoutTimew.Text = "label4";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(554, 24);
+            label5.Name = "label5";
+            label5.Size = new Size(72, 15);
+            label5.TabIndex = 12;
+            label5.Text = "a na miesiąc";
+            // 
+            // monthlyIncome
+            // 
+            monthlyIncome.AutoSize = true;
+            monthlyIncome.Location = new Point(641, 24);
+            monthlyIncome.Name = "monthlyIncome";
+            monthlyIncome.Size = new Size(38, 15);
+            monthlyIncome.TabIndex = 13;
+            monthlyIncome.Text = "label6";
+            // 
             // mainApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1292, 667);
+            Controls.Add(monthlyIncome);
+            Controls.Add(label5);
+            Controls.Add(logoutTimew);
+            Controls.Add(label3);
+            Controls.Add(groupBox3);
+            Controls.Add(groupBox2);
+            Controls.Add(groupBox1);
             Controls.Add(newLokal);
             Controls.Add(date);
             Controls.Add(label1);
@@ -537,6 +627,8 @@
             Name = "mainApp";
             Text = "Aplication for street bisnesman";
             Load += mainApp_Load;
+            TextChanged += mainApp_mouseMove;
+            MouseMove += mainApp_MouseMove;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             toDoList.ResumeLayout(false);
@@ -597,5 +689,13 @@
         private Button randomData;
         private Button rejectButton;
         private Button acceptButton;
+        private Button button3;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
+        private GroupBox groupBox3;
+        private Label label3;
+        private Label logoutTimew;
+        private Label label5;
+        private Label monthlyIncome;
     }
 }

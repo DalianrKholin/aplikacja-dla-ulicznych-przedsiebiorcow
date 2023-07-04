@@ -14,11 +14,13 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 {
     public partial class mainApp : Form
     {
+        private int lastMove;
+        private Thread session;
         public bool isAdmin { get; set; }
         private string connectS = string.Empty;
         private string _name;
         internal myDataContexData dataConnect;
-        public myDataContexUsers userConnect; 
+        public myDataContexUsers userConnect;
         public string username
         {
             get { return _name; }
@@ -28,16 +30,17 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 labelUser.Text = value;
             }
         }
-
         public mainApp()
         {
-            
             userConnect = new myDataContexUsers(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true");
             enterApp login = new enterApp(this, userConnect);
             InitializeComponent();
             login.ShowDialog();
             connectS = @"server=DESKTOP-AI71G3Q;database=placeholder;integrated security=true".Replace("placeholder", (username + "Data"));
             dataConnect = new myDataContexData(connectS);
+            lastMove = 120;
+            session = new Thread(() => focusSession());
+            session.Start();
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -62,10 +65,13 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             zamknąc połaczenie z bazą, pozapisywać wszystko
             wyzerować wszystkie zmienne a potem otworzyć ponownie okno logowania
              */
+            session.Interrupt();
             this.Hide();
             new enterApp(this, userConnect).ShowDialog();
-            connectS = @"server=DESKTOP-AI71G3Q;database=placeholder;integrated security=true".Replace("placeholder", (username + "Data"));
-            dataConnect = new myDataContexData(connectS);
+            lastMove = 10;
+            session = new Thread(() => focusSession());
+            session.Start();
+
         }
 
         private void date_Validated(object sender, EventArgs e)
@@ -109,7 +115,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     panishment = textNewLocalPanishment.Text == "" ? null : textNewLocalPanishment.Text,
                     tribiute = Convert.ToInt32(textNewLocalTribiute.Text)
                 });
-                dataConnect.SaveChanges();
 
             }
             catch (Exception e)
@@ -123,11 +128,45 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             if (textNewLocalName.Text != null && textNewLocalStreet.Text != null && textNewLocalTribiute.Text != null)
             {
                 new Thread(() => addToDataBase()).Start();
+                textNewLocalName.Text = "";
+                textNewLocalPanishment.Text = "";
+                textNewLocalStreet.Text = "";
+                textNewLocalTribiute.Text = "";
+                textNewLocaNr.Text = "";
             }
             else
             {
                 MessageBox.Show("uzupełnij dane nowego lokalu");
             }
+        }
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            dataConnect.SaveChangesAsync();
+        }
+
+        private void rejectButton_Click(object sender, EventArgs e)
+        {
+            dataConnect.Dispose();
+        }
+
+        private async Task focusSession()
+        {
+            while (lastMove-- > 0)
+            {
+                logoutTimew.Text = lastMove.ToString();
+                await Task.Delay(1000);
+            }
+            logoutToolStripMenuItem_Click(this, new EventArgs());
+
+        }
+        private void mainApp_MouseMove(object sender, MouseEventArgs e)
+        {
+            lastMove = 120;
+        }
+
+        private void mainApp_mouseMove(object sender, EventArgs e)
+        {
+            lastMove = 120;
         }
     }
 }

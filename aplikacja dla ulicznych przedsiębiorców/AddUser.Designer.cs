@@ -42,7 +42,7 @@
             // passwordInfo
             // 
             passwordInfo.Location = new Point(12, 84);
-            passwordInfo.Size = new Size(405, 23);
+            passwordInfo.Size = new Size(472, 23);
             passwordInfo.Visible = true;
             // 
             // fakeBox
