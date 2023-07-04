@@ -15,23 +15,37 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 
         private async Task addUserAcction()
         {
-            passwordInfo.Visible = true;
-            if (userConnection.usersData.Any(e => e.name == user))
+            try
             {
-                passwordInfo.Text = "w bazie wystepuje użytkownik o takiej nazwie, proszę o wybranie innej";
+                var hasz = coder(password);
+                passwordInfo.Visible = true;
+                if (userConnection.usersData.Any(e => e.name == user))
+                {
+                    passwordInfo.Text = "w bazie wystepuje użytkownik o takiej nazwie, proszę o wybranie innej";
+                    return;
+                }
+                userConnection.usersData.Add(new data
+                {
+                    name = user,
+                    pass = hasz,
+                    adminPass = adminButton.Checked
+                });
+                userConnection.SaveChanges();
+                var id = userConnection.usersData.Single(e => e.name == user);
+                userConnection.messages.Add(new Message
+                {
+                    item = "hello new user welcome on our application for street bisnesman",
+                    recipient = id,
+                    sender = id
+                });
+                userConnection.SaveChanges();
+                var newMes = userConnection.messages.First(e => (e.item == "hello new user welcome on our application for street bisnesman"));
+                id.messageCounter = newMes.ID;
+                userConnection.SaveChanges();
+                passwordInfo.Text = "udało się dodać uzytkownika";
                 return;
             }
-            userConnection.usersData.Add(new data
-            {
-                name = user,
-                pass = coder(password),
-                adminPass = adminButton.Checked
-            });
-
-            userConnection.SaveChanges();
-            passwordInfo.Text = "udało się dodać uzytkownika";
-
-            return;
+            catch(Exception e) { MessageBox.Show(e.ToString()); }
         }
 
         public AddUser(myDataContexUsers call)

@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.Collections;
 
 namespace aplikacja_dla_ulicznych_przedsiębiorców
 {
@@ -23,6 +25,9 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         public myDataContexUsers userConnect;
         public List<TextBox> toZero = new List<TextBox>();
         public data usersData;
+        private Queue<Message> qMessage = new Queue<Message>();
+        private List<TextBox> messagesTextBoxList = new List<TextBox>();
+        private List<Label> messagesLabelList = new List<Label>();
         public string username
         {
             get { return _name; }
@@ -34,29 +39,59 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         }
         public mainApp()
         {
-            userConnect = new myDataContexUsers(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true");
+            userConnect = new myDataContexUsers(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true;multipleactiveresultsets=true");
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<myDataContexUsers, aplikacja_dla_ulicznych_przedsiębiorców.Migrations.Configuration>());
             enterApp login = new enterApp(this, userConnect);
             InitializeComponent();
             login.ShowDialog();
             connectS = @"server=DESKTOP-AI71G3Q;database=placeholder;integrated security=true".Replace("placeholder", (username + "Data"));
+            //obrzydliwy kod alert
             toZero.Add(textNewLocalName);
             toZero.Add(textNewLocalPanishment);
             toZero.Add(textNewLocalStreet);
             toZero.Add(textNewLocalTribiute);
             toZero.Add(textNewLocalNr);
+            messagesLabelList.Add(user1);
+            messagesLabelList.Add(user2);
+            messagesLabelList.Add(user3);
+            messagesLabelList.Add(user4);
+            messagesLabelList.Add(user5);
+            messagesTextBoxList.Add(mess1);
+            messagesTextBoxList.Add(mess2);
+            messagesTextBoxList.Add(mess3);
+            messagesTextBoxList.Add(mess4);
+            messagesTextBoxList.Add(mess5);
             dataConnect = new myDataContexData(connectS);
             lastMove = 120;
             session = new Thread(() => focusSession());
-            new Thread(() => { inicjalizeCombo(); }).Start();
+            new Thread(() => { inicjalizeComboAndNewMessages(); }).Start();
             session.Start();
         }
-        private async Task inicjalizeCombo()
+        private async Task inicjalizeComboAndNewMessages()
         {
+
             foreach (var item in userConnect.usersData)
             {
                 usersList.Items.Add(item.name);
             }
+            foreach (var item in userConnect.messages.Where(e => e.recipient.name == usersData.name && e.ID > usersData.messageCounter).ToList())
+            {
+                qMessage.Enqueue(item);
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                if (qMessage.Count == 0)
+                {
+                    messagesTextBoxList[i].Visible = false;
+                    messagesLabelList[i].Visible = false;
+                    continue;
+                }
+                Message message = qMessage.Dequeue();
+                messagesLabelList[i].Text = "user: " + message.sender.name.ToString();
+                messagesTextBoxList[i].Text = message.item;
+                usersData.messageCounter = message.ID;
+            }
+            userConnect.SaveChanges();
         }
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -172,22 +207,35 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 
         private async Task sendMessageAcction()
         {
-            MessageBox.Show((usersList.Text == usersList.Items[0].ToString()).ToString());
-            var member = userConnect.usersData.Single(e => e.name ==  usersList.SelectedItem);
-            MessageBox.Show("pogger");
+
+            if (usersList.SelectedIndex == -1)
+            {
+                int index = usersList.Items.IndexOf(usersList.Text);
+                if (index == -1)
+                {
+                    return;
+                }
+                usersList.SelectedItem = index;
+            }
+            var member = userConnect.usersData.Single(e => e.name == usersList.SelectedItem);
             userConnect.messages.Add(new Message
             {
                 sender = usersData,
                 item = messageToUser.Text,
                 recipient = member
             });
-            userConnect.SaveChanges();
-            MessageBox.Show("udało się");
 
+            userConnect.SaveChanges();
+            MessageBox.Show("udało się wysłać wiadomość");
         }
         private void sendMessage_Click(object sender, EventArgs e)
         {
             new Thread(() => { sendMessageAcction(); }).Start();
+        }
+
+        private void messageTaken_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

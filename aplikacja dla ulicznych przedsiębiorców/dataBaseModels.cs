@@ -54,7 +54,8 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         [StringLength(64)]
         public string pass { get; set; }
         public bool adminPass { get; set; }
-        public Message Message { get; set; }
+        public int messageCounter { get; set; }
+        public Message message { get; set; }
         virtual public ICollection<Message> mess { get; set; }
     }
 }

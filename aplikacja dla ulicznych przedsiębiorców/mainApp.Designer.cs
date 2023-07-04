@@ -83,15 +83,29 @@
             label4 = new Label();
             usersList = new ComboBox();
             messageToUser = new RichTextBox();
-            groupBox3 = new GroupBox();
+            messageTaken = new GroupBox();
+            user1 = new Label();
+            mess1 = new TextBox();
+            user5 = new Label();
+            user4 = new Label();
+            user3 = new Label();
+            user2 = new Label();
+            mess5 = new TextBox();
+            mess4 = new TextBox();
+            mess3 = new TextBox();
+            mess2 = new TextBox();
+            textBox1 = new TextBox();
             label3 = new Label();
             logoutTimew = new Label();
             label5 = new Label();
             monthlyIncome = new Label();
+            label7 = new Label();
+            mes1 = new Label();
             menuStrip1.SuspendLayout();
             toDoList.SuspendLayout();
             newLokal.SuspendLayout();
             groupBox2.SuspendLayout();
+            messageTaken.SuspendLayout();
             SuspendLayout();
             // 
             // labelUser
@@ -598,6 +612,7 @@
             // 
             // usersList
             // 
+            usersList.DropDownStyle = ComboBoxStyle.DropDownList;
             usersList.FormattingEnabled = true;
             usersList.Location = new Point(6, 49);
             usersList.Name = "usersList";
@@ -612,14 +627,117 @@
             messageToUser.TabIndex = 0;
             messageToUser.Text = "";
             // 
-            // groupBox3
+            // messageTaken
             // 
-            groupBox3.Location = new Point(431, 358);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(643, 297);
-            groupBox3.TabIndex = 9;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "jak wyglądają zasoby grupy";
+            messageTaken.Controls.Add(user1);
+            messageTaken.Controls.Add(mess1);
+            messageTaken.Controls.Add(user5);
+            messageTaken.Controls.Add(user4);
+            messageTaken.Controls.Add(user3);
+            messageTaken.Controls.Add(user2);
+            messageTaken.Controls.Add(mess5);
+            messageTaken.Controls.Add(mess4);
+            messageTaken.Controls.Add(mess3);
+            messageTaken.Controls.Add(mess2);
+            messageTaken.Location = new Point(431, 358);
+            messageTaken.Name = "messageTaken";
+            messageTaken.Size = new Size(643, 297);
+            messageTaken.TabIndex = 9;
+            messageTaken.TabStop = false;
+            messageTaken.Text = "new message";
+            messageTaken.Enter += messageTaken_Enter;
+            // 
+            // user1
+            // 
+            user1.AutoSize = true;
+            user1.Location = new Point(6, 24);
+            user1.Name = "user1";
+            user1.Size = new Size(44, 15);
+            user1.TabIndex = 18;
+            user1.Text = "label13";
+            // 
+            // mess1
+            // 
+            mess1.Location = new Point(6, 44);
+            mess1.Name = "mess1";
+            mess1.ReadOnly = true;
+            mess1.Size = new Size(631, 23);
+            mess1.TabIndex = 16;
+            // 
+            // user5
+            // 
+            user5.AutoSize = true;
+            user5.Location = new Point(6, 241);
+            user5.Name = "user5";
+            user5.Size = new Size(44, 15);
+            user5.TabIndex = 15;
+            user5.Text = "label16";
+            // 
+            // user4
+            // 
+            user4.AutoSize = true;
+            user4.Location = new Point(6, 186);
+            user4.Name = "user4";
+            user4.Size = new Size(44, 15);
+            user4.TabIndex = 14;
+            user4.Text = "label15";
+            // 
+            // user3
+            // 
+            user3.AutoSize = true;
+            user3.Location = new Point(6, 132);
+            user3.Name = "user3";
+            user3.Size = new Size(44, 15);
+            user3.TabIndex = 13;
+            user3.Text = "label14";
+            // 
+            // user2
+            // 
+            user2.AutoSize = true;
+            user2.Location = new Point(6, 77);
+            user2.Name = "user2";
+            user2.Size = new Size(44, 15);
+            user2.TabIndex = 12;
+            user2.Text = "label13";
+            // 
+            // mess5
+            // 
+            mess5.Location = new Point(6, 259);
+            mess5.Name = "mess5";
+            mess5.ReadOnly = true;
+            mess5.Size = new Size(631, 23);
+            mess5.TabIndex = 9;
+            // 
+            // mess4
+            // 
+            mess4.Location = new Point(6, 205);
+            mess4.Name = "mess4";
+            mess4.ReadOnly = true;
+            mess4.Size = new Size(631, 23);
+            mess4.TabIndex = 7;
+            // 
+            // mess3
+            // 
+            mess3.Location = new Point(6, 150);
+            mess3.Name = "mess3";
+            mess3.ReadOnly = true;
+            mess3.Size = new Size(631, 23);
+            mess3.TabIndex = 5;
+            // 
+            // mess2
+            // 
+            mess2.Location = new Point(6, 97);
+            mess2.Name = "mess2";
+            mess2.ReadOnly = true;
+            mess2.Size = new Size(631, 23);
+            mess2.TabIndex = 3;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(26, 58);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(631, 23);
+            textBox1.TabIndex = 0;
             // 
             // label3
             // 
@@ -657,6 +775,24 @@
             monthlyIncome.TabIndex = 13;
             monthlyIncome.Text = "label6";
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(26, 28);
+            label7.Name = "label7";
+            label7.Size = new Size(33, 15);
+            label7.TabIndex = 2;
+            label7.Text = "from";
+            // 
+            // mes1
+            // 
+            mes1.AutoSize = true;
+            mes1.Location = new Point(65, 28);
+            mes1.Name = "mes1";
+            mes1.Size = new Size(44, 15);
+            mes1.TabIndex = 11;
+            mes1.Text = "label12";
+            // 
             // mainApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -666,7 +802,7 @@
             Controls.Add(label5);
             Controls.Add(logoutTimew);
             Controls.Add(label3);
-            Controls.Add(groupBox3);
+            Controls.Add(messageTaken);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(newLokal);
@@ -689,6 +825,8 @@
             newLokal.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            messageTaken.ResumeLayout(false);
+            messageTaken.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -747,7 +885,7 @@
         private Button button3;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
-        private GroupBox groupBox3;
+        private GroupBox messageTaken;
         private Label label3;
         private Label logoutTimew;
         private Label label5;
@@ -757,5 +895,18 @@
         private Label label4;
         private ComboBox usersList;
         private RichTextBox messageToUser;
+        private Label user5;
+        private Label user4;
+        private Label user3;
+        private Label user2;
+        private TextBox mess5;
+        private TextBox mess4;
+        private TextBox mess3;
+        private TextBox mess2;
+        private TextBox textBox1;
+        private Label label7;
+        private Label mes1;
+        private Label user1;
+        private TextBox mess1;
     }
 }
