@@ -26,7 +26,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         public myDataContexUsers userConnect;
         public List<TextBox> toZero = new List<TextBox>();
         public data usersData;
-        private List<Thread> threadsData = new List<Thread>(); //marna próba zapanowania nad threadami
         private Queue<Message> qMessage = new Queue<Message>();
         private List<TextBox> messagesTextBoxList = new List<TextBox>();
         private List<Label> messagesLabelList = new List<Label>();
@@ -66,21 +65,23 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             dataConnect = new myDataContexData(connectS);
             lastMove = 120;
             session = new Thread(() => focusSession());
-            new Thread(() => { inicjalizeComboAndNewMessages(); }).Start();
+            new Thread(() => { reinicjacjaDanychIWiadomosci(); }).Start();
             session.Start();
         }
-        private async Task inicjalizeComboAndNewMessages()
+        private async Task reinicjacjaDanychIWiadomosci()
         {
-            usersData=userConnect.usersData.Single(e=> e.name==username);
+            usersData = userConnect.usersData.Single(e => e.name == username);
             usersList.Items.Clear();
             foreach (var item in userConnect.usersData)
             {
                 usersList.Items.Add(item.name);
             }
-            foreach (var item in userConnect.messages.Where(e => e.recipient.name == usersData.name && e.ID >= usersData.messageCounter))
+            foreach (var item in userConnect.messages.Where(e => e.recipient.name == usersData.name && e.ID > usersData.messageCounter).OrderBy(e => -e.ID))
             {
                 qMessage.Enqueue(item);
             }
+            usersData.messageCounter = qMessage.First().ID;
+            userConnect.SaveChanges();
             messageTaken.Text = "new messages = " + qMessage.Count.ToString();
             for (int i = 0; i < 5; i++)
             {
@@ -93,9 +94,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 Message message = qMessage.Dequeue();
                 messagesLabelList[i].Text = "user: " + message.sender.name.ToString();
                 messagesTextBoxList[i].Text = message.item;
-                usersData.messageCounter = message.ID;
             }
-            userConnect.SaveChanges();
         }
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -115,13 +114,15 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 z.Text = "";
             }
             messageToUser.Text = "";
+            refreshMessages.Stop();
             this.Hide();
             new enterApp(this, userConnect).ShowDialog();
             lastMove = 120;
             sessionStoper = false;
             session = new Thread(() => focusSession());
-            new Thread(() => { inicjalizeComboAndNewMessages(); }).Start();
+            new Thread(() => { reinicjacjaDanychIWiadomosci(); }).Start();
             session.Start();
+            refreshMessages.Start();
 
         }
 
@@ -137,12 +138,15 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             if (isAdmin)
             {
                 sessionStoper = true;
+                refreshMessages.Stop();
                 new AddUser(userConnect).ShowDialog();
                 lastMove = 120;
-                sessionStoper=false;
-                new Thread(() => { inicjalizeComboAndNewMessages(); }).Start();
+
+                sessionStoper = false;
+                new Thread(() => { reinicjacjaDanychIWiadomosci(); }).Start();
                 session = new Thread(() => focusSession());
                 session.Start();
+                refreshMessages.Start();
             }
         }
         internal async Task addToDataBase()
@@ -220,12 +224,13 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 
         private async Task sendMessageAcction()
         {
-
+            statusMessage.Text = "wysyłanie wiadomości...";
             if (usersList.SelectedIndex == -1)
             {
                 int index = usersList.Items.IndexOf(usersList.Text);
                 if (index == -1)
                 {
+                    statusMessage.Text = "nieporawny użytkownik";
                     return;
                 }
                 usersList.SelectedItem = index;
@@ -239,16 +244,33 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             });
 
             userConnect.SaveChanges();
-            MessageBox.Show("udało się wysłać wiadomość");
+            messageToUser.Text = "";
+            statusMessage.Text = "udało się wysłać wiadomość";
         }
         private void sendMessage_Click(object sender, EventArgs e)
         {
             new Thread(() => { sendMessageAcction(); }).Start();
+
         }
 
         private void messageTaken_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void refreshMessages_Tick(object sender, EventArgs e)
+        {
+            new Thread(() => { reinicjacjaDanychIWiadomosci(); }).Start();
+        }
+
+        private void messageToUser_Enter(object sender, EventArgs e)
+        {
+            statusMessage.Text = "pisanie...";
+        }
+
+        private void messageToUser_Leave(object sender, EventArgs e)
+        {
+            statusMessage.Text = "";
         }
     }
 }

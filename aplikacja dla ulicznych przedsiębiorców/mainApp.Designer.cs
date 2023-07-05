@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             labelUser = new Label();
             label2 = new Label();
             menuStrip1 = new MenuStrip();
@@ -78,6 +79,8 @@
             newLocalName = new Label();
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
+            statusMessage = new Label();
+            label8 = new Label();
             sendMessage = new Button();
             label6 = new Label();
             label4 = new Label();
@@ -101,6 +104,7 @@
             monthlyIncome = new Label();
             label7 = new Label();
             mes1 = new Label();
+            refreshMessages = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             toDoList.SuspendLayout();
             newLokal.SuspendLayout();
@@ -570,6 +574,8 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(statusMessage);
+            groupBox2.Controls.Add(label8);
             groupBox2.Controls.Add(sendMessage);
             groupBox2.Controls.Add(label6);
             groupBox2.Controls.Add(label4);
@@ -581,6 +587,23 @@
             groupBox2.TabIndex = 8;
             groupBox2.TabStop = false;
             groupBox2.Text = "wyślij wiadomość do użytkownika";
+            // 
+            // statusMessage
+            // 
+            statusMessage.AutoSize = true;
+            statusMessage.Location = new Point(123, 274);
+            statusMessage.Name = "statusMessage";
+            statusMessage.Size = new Size(0, 15);
+            statusMessage.TabIndex = 6;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(6, 274);
+            label8.Name = "label8";
+            label8.Size = new Size(111, 15);
+            label8.TabIndex = 5;
+            label8.Text = "status wiadomości :";
             // 
             // sendMessage
             // 
@@ -626,6 +649,8 @@
             messageToUser.Size = new Size(401, 162);
             messageToUser.TabIndex = 0;
             messageToUser.Text = "";
+            messageToUser.Enter += messageToUser_Enter;
+            messageToUser.Leave += messageToUser_Leave;
             // 
             // messageTaken
             // 
@@ -793,6 +818,12 @@
             mes1.TabIndex = 11;
             mes1.Text = "label12";
             // 
+            // refreshMessages
+            // 
+            refreshMessages.Enabled = true;
+            refreshMessages.Interval = 60000;
+            refreshMessages.Tick += refreshMessages_Tick;
+            // 
             // mainApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -908,5 +939,8 @@
         private Label mes1;
         private Label user1;
         private TextBox mess1;
+        private System.Windows.Forms.Timer refreshMessages;
+        private Label statusMessage;
+        private Label label8;
     }
 }
