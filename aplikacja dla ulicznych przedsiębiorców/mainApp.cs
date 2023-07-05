@@ -76,12 +76,15 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             {
                 usersList.Items.Add(item.name);
             }
-            foreach (var item in userConnect.messages.Where(e => e.recipient.name == usersData.name && e.ID > usersData.messageCounter).OrderBy(e => -e.ID))
+            if (userConnect.messages.Any((e => e.recipient.name == usersData.name && e.ID > usersData.messageCounter)))
             {
-                qMessage.Enqueue(item);
+                foreach (var item in userConnect.messages.Where(e => e.recipient.name == usersData.name && e.ID > usersData.messageCounter).OrderBy(e => -e.ID))
+                {
+                    qMessage.Enqueue(item);
+                }
+                usersData.messageCounter = qMessage.Peek().ID;
+                userConnect.SaveChanges();
             }
-            usersData.messageCounter = qMessage.First().ID;
-            userConnect.SaveChanges();
             messageTaken.Text = "new messages = " + qMessage.Count.ToString();
             for (int i = 0; i < 5; i++)
             {
@@ -91,8 +94,10 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     messagesLabelList[i].Visible = false;
                     continue;
                 }
+                messagesTextBoxList[i].Visible = true;
+                messagesLabelList[i].Visible = true;
                 Message message = qMessage.Dequeue();
-                messagesLabelList[i].Text = "user: " + message.sender.name.ToString();
+                messagesLabelList[i].Text = ("user: " + message.sender.name.ToString()).PadRight(30)+message.date;
                 messagesTextBoxList[i].Text = message.item;
             }
         }
@@ -240,7 +245,9 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             {
                 sender = usersData,
                 item = messageToUser.Text,
-                recipient = member
+                recipient = member,
+                date = DateTime.Now
+                
             });
 
             userConnect.SaveChanges();

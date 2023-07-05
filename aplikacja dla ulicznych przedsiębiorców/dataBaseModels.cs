@@ -33,6 +33,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         public int ID { get; set; }
         [MaxLength(500)]
         public string item { get; set; }
+        public DateTime? date { get; set; }
         public data sender { get; set; }
         public data recipient { get; set; }
        
