@@ -19,26 +19,27 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             {
                 var hasz = coder(password);
                 passwordInfo.Visible = true;
-                if (userConnection.usersData.Any(e => e.name == user))
+                if (userConnection.persons.Any(e => e.name == user))
                 {
                     passwordInfo.Text = "w bazie wystepuje użytkownik o takiej nazwie, proszę o wybranie innej";
                     return;
                 }
-                userConnection.usersData.Add(new data
+                userConnection.persons.Add(new Bissnesman
                 {
                     name = user,
                     pass = hasz,
-                    adminPass = adminButton.Checked
+                    adminPass = adminButton.Checked,
+                    messageCounter = 0
                 });
                 userConnection.SaveChanges();
-                var id = userConnection.usersData.Single(e => e.name == user);
+                var id = userConnection.persons.Single(e => e.name == user);
                 userConnection.messages.Add(new Message
                 {
                     item = "hello new user welcome on our application for street bisnesman",
+                    date =DateTime.Now,
                     recipient = id,
                     sender = id
                 });
-                id.messageCounter =0;
                 userConnection.SaveChanges();
                 passwordInfo.Text = "udało się dodać uzytkownika";
             }

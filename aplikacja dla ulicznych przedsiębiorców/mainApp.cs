@@ -22,10 +22,9 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         public bool isAdmin { get; set; }
         private string connectS = string.Empty;
         private string _name;
-        internal myDataContexData dataConnect;
         public myDataContexUsers userConnect;
         public List<TextBox> toZero = new List<TextBox>();
-        public data usersData;
+        public Bissnesman usersData;
         private Queue<Message> qMessage = new Queue<Message>();
         private List<TextBox> messagesTextBoxList = new List<TextBox>();
         private List<Label> messagesLabelList = new List<Label>();
@@ -45,7 +44,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             enterApp login = new enterApp(this, userConnect);
             InitializeComponent();
             login.ShowDialog();
-            connectS = @"server=DESKTOP-AI71G3Q;database=placeholder;integrated security=true".Replace("placeholder", (username + "Data"));
             //obrzydliwy kod alert
             toZero.Add(textNewLocalName);
             toZero.Add(textNewLocalPanishment);
@@ -62,7 +60,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             messagesTextBoxList.Add(mess3);
             messagesTextBoxList.Add(mess4);
             messagesTextBoxList.Add(mess5);
-            dataConnect = new myDataContexData(connectS);
             lastMove = 120;
             session = new Thread(() => focusSession());
             new Thread(() => { reinicjacjaDanychIWiadomosci(); }).Start();
@@ -70,9 +67,9 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         }
         private async Task reinicjacjaDanychIWiadomosci()
         {
-            usersData = userConnect.usersData.Single(e => e.name == username);
+            usersData = userConnect.persons.Single(e => e.name == username);
             usersList.Items.Clear();
-            foreach (var item in userConnect.usersData)
+            foreach (var item in userConnect.persons)
             {
                 usersList.Items.Add(item.name);
             }
@@ -158,21 +155,43 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         {
             try
             {
-                if (dataConnect.locals.Any(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocalNr.Text)))
+                
+                if (userConnect.places.Any(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocalNr.Text)))
                 {
-                    MessageBox.Show("ten lokal aktualnie istnieje w bazie");
-                    return;
+                    if (userConnect.places.Any(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocalNr.Text && (e.protectors.Any(u => e.ID == usersData.ID)))))
+                    {
+                        MessageBox.Show("ten lokal aktualnie istnieje w bazie");
+                        return;
+                    }
+                    else
+                    {
+                        var place = userConnect.places.Single(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocalNr.Text));
+                        place.protectors.Add(usersData);
+                    }
                 }
-                dataConnect.locals.Add(new lokale
+                else
                 {
+                    Place place = new Place
+                    {
+                        protectors = new List<Bissnesman>(),
+                        name = textNewLocalName.Text,
+                        street = textNewLocalStreet.Text,
+                        number = textNewLocalNr.Text == "" ? 10 : Convert.ToInt32(textNewLocalNr.Text),
+                        panishment = textNewLocalPanishment.Text == "" ? "" : textNewLocalPanishment.Text,
+                        tribiute = Convert.ToInt32(textNewLocalTribiute.Text)
+                    };
+                    place.protectors.Add(usersData);
+                    userConnect.places.Add(place);
+                    
 
-                    name = textNewLocalName.Text,
-                    street = textNewLocalStreet.Text,
-                    number = textNewLocalNr.Text == "" ? null : Convert.ToInt32(textNewLocalNr.Text),
-                    panishment = textNewLocalPanishment.Text == "" ? null : textNewLocalPanishment.Text,
-                    tribiute = Convert.ToInt32(textNewLocalTribiute.Text)
-                });
-
+                }
+                userConnect.SaveChanges();
+                textNewLocalName.Text = "";
+                textNewLocalPanishment.Text = "";
+                textNewLocalStreet.Text = "";
+                textNewLocalTribiute.Text = "";
+                textNewLocalNr.Text = "";
+                newLokal.Text += " - sa zmiany do zapisu";
             }
             catch (Exception e)
             {
@@ -185,25 +204,29 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             if (textNewLocalName.Text != null && textNewLocalStreet.Text != null && textNewLocalTribiute.Text != null)
             {
                 new Thread(() => addToDataBase()).Start();
-                textNewLocalName.Text = "";
-                textNewLocalPanishment.Text = "";
-                textNewLocalStreet.Text = "";
-                textNewLocalTribiute.Text = "";
-                textNewLocalNr.Text = "";
             }
             else
             {
                 MessageBox.Show("uzupełnij dane nowego lokalu");
             }
         }
+
+        private async Task save()
+        {
+            
+            await userConnect.SaveChangesAsync();
+            newLokal.Text = newLokal.Text.Replace(" - sa zmiany do zapisu", " - udało się dodać użytkownika");
+            
+        } 
+
         private void button3_Click_1(object sender, EventArgs e)
         {
-            dataConnect.SaveChangesAsync();
+            new Thread(() => { save(); }).Start();
         }
 
         private void rejectButton_Click(object sender, EventArgs e)
         {
-            dataConnect.Dispose();
+            userConnect.Dispose();
         }
 
         private async Task focusSession()
@@ -240,7 +263,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 }
                 usersList.SelectedItem = index;
             }
-            var member = userConnect.usersData.Single(e => e.name == usersList.SelectedItem);
+            var member = userConnect.persons.Single(e => e.name == usersList.SelectedItem);
             userConnect.messages.Add(new Message
             {
                 sender = usersData,
