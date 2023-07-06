@@ -44,7 +44,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 passwordInfo.Text = "udało się dodać uzytkownika";
             }
             catch(Exception e) {
-                MessageBox.Show(e.ToString()); 
+                passwordInfo.Text = "wystapił błąd przy dodawaniu";
             }
 
         }

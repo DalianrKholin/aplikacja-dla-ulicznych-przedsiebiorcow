@@ -13,7 +13,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         public DbSet<Message> messages { get; set; }
         public DbSet<Place> places { get; set; }
         public DbSet<ToDoTask> toDoTasks { get; set; }
-        public DbSet<PlaceB> tasks { get; set; }
     }
     public class ToDoTask
     {
@@ -35,7 +34,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         public string pass { get; set; }
         public bool adminPass { get; set; }
         public int messageCounter { get; set; }
-        public List<PlaceB>? joiner { get; set; } = new List<PlaceB>();
         public List<Place>? places { get; set; } = new List<Place> { };
     }
     public class Message
@@ -61,13 +59,5 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         [MaxLength(100)]
         public string? panishment { get; set; }
         public List<Businessman> protectors { get; set; } = new List<Businessman>();
-    }
-    public class PlaceB
-    {
-        public int ID { get; set; }
-        public int PlaceID { get; set; }
-        public int BissnesmanID { get; set; }
-        public Place place { get; set; }
-        public Businessman businessman { get; set; }
     }
 }

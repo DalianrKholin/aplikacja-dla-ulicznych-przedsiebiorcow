@@ -27,7 +27,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         private Queue<Message> qMessage = new Queue<Message>();
         private List<TextBox> messagesTextBoxList = new List<TextBox>();
         private List<Label> messagesLabelList = new List<Label>();
-        private List<string> helperList { get; set; } = new List<string>() ;
+        private List<string> helperList { get; set; } = new List<string>();
         public string username
         {
             get { return _name; }
@@ -61,6 +61,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             messagesTextBoxList.Add(mess4);
             messagesTextBoxList.Add(mess5);
             lastMove = 120;
+            usersData = userConnect.persons.Single(e => e.name == username);
             session = new Thread(() => focusSession());
             new Thread(() => { reinicjacjaDanychIWiadomosci(); }).Start();
             session.Start();
@@ -76,15 +77,17 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         private async Task reinicjacjaDanychIWiadomosci()
         {
             //część message
-            usersData = userConnect.persons.Single(e => e.name == username);
+            int[] indexTab = new int[2] { usersList.SelectedIndex, listPlaces.SelectedIndex };
             usersList.Items.Clear();
             listPlaces.Items.Clear();
             helpers.Items.Clear();
+
             foreach (var item in userConnect.persons)
             {
+                usersList.Items.Add(item.name); // do wciągnięcia pod ifa, nie można sobie samemu wysyłać wiadomości
                 if (item.name != username)
                 {
-                    usersList.Items.Add(item.name);
+
                     helpers.Items.Add(item.name);
                 }
             }
@@ -99,19 +102,22 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             }
 
             messageTaken.Text = "new messages = " + qMessage.Count.ToString();
-            for (int i = 0; i < 5; i++)
+            if (qMessage.Count != 0 || messagesLabelList[0].Text == "label13")
             {
-                if (qMessage.Count == 0)
+                for (int i = 0; i < 5; i++)
                 {
-                    messagesTextBoxList[i].Visible = false;
-                    messagesLabelList[i].Visible = false;
-                    continue;
+                    if (qMessage.Count == 0)
+                    {
+                        messagesTextBoxList[i].Visible = false;
+                        messagesLabelList[i].Visible = false;
+                        continue;
+                    }
+                    messagesTextBoxList[i].Visible = true;
+                    messagesLabelList[i].Visible = true;
+                    Message message = qMessage.Dequeue();
+                    messagesLabelList[i].Text = ("user: " + message.sender.name.ToString()).PadRight(30) + message.date;
+                    messagesTextBoxList[i].Text = message.item;
                 }
-                messagesTextBoxList[i].Visible = true;
-                messagesLabelList[i].Visible = true;
-                Message message = qMessage.Dequeue();
-                messagesLabelList[i].Text = ("user: " + message.sender.name.ToString()).PadRight(30) + message.date;
-                messagesTextBoxList[i].Text = message.item;
             }
             // część Taskowa
             foreach (var item in userConnect.places.
@@ -120,7 +126,12 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             {
                 listPlaces.Items.Add(item);
             }
-
+            foreach (var x in helperList)
+            {
+                helpers.Items[helpers.FindItemWithText(x.Replace("\u2714", "")).Index].Text = x;
+            }
+            usersList.SelectedIndex = indexTab[0];
+            listPlaces.SelectedIndex = indexTab[1];
         }
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -215,7 +226,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 textNewLocalStreet.Text = "";
                 textNewLocalTribiute.Text = "";
                 textNewLocalNr.Text = "";
-                newLokal.Text += " - sa zmiany do zapisu";
+                newLokal.Text += " - udało się zapisać zmiany";
             }
             catch (Exception e)
             {
@@ -341,15 +352,16 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         {
             int index = helpers.SelectedItems[0].Index;
             var x = helpers.Items[helpers.SelectedItems[0].Index];
+            string y = x.Text;
             if (helperList.Any(e => e == x.Text))
             {
                 helpers.Items[index].Text = helpers.Items[index].Text.Replace("\u2714", "");
-                helperList.Remove(x.Text);
+                helperList.Remove(y);
             }
             else
             {
-                helperList.Add(x.Text + '\u2714');
-                helpers.Items[index].Text += '\u2714';
+                helperList.Add(x.Text + "\u2714");
+                helpers.Items[index].Text += "\u2714";
             }
             helpers.Refresh();
             //"\u2714"
@@ -358,8 +370,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         {
             try
             {
-
-
                 actionStatus.Text = "wysyłanie";
                 List<Businessman> tsotsi = new List<Businessman>();
                 foreach (var items in helperList)
@@ -377,20 +387,27 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     unluckyIncidentSite = userConnect.places.Single(e => e.name == myPlace),//(Place)listPlaces.Items[listPlaces.SelectedIndex],
                     executioners = tsotsi.Count == 0 ? null : tsotsi
                 };
-
+                userConnect.toDoTasks.Add(newTask);
                 await userConnect.SaveChangesAsync();
-                actionStatus.Text = "udało się wysławć wiadomość";
+                incidentDay.SelectedIndex = -1;
+                incidenthMonth.SelectedIndex = -1;
+                listPlaces.SelectedIndex = -1;
+                weightOfAction.SelectedIndex = -1;
+                whatToDo.Text = "";
+                incidentIncome.Text = "";
+                actionStatus.Text = "udało się ustawić zadanie";
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
-            
+
         }
 
         private void addAction_Click(object sender, EventArgs e)
         {
-            if (incidenthMonth.SelectedIndex == -1 || incidentDay.SelectedIndex== -1 || listPlaces.SelectedIndex==-1 || whatToDo.Text==string.Empty || weightOfAction.SelectedIndex == -1 )
+            if (incidenthMonth.SelectedIndex == -1 || incidentDay.SelectedIndex == -1 || listPlaces.SelectedIndex == -1 || whatToDo.Text == string.Empty || weightOfAction.SelectedIndex == -1)
             {
                 actionStatus.Text = "proszę uzupełnić dane ok?";
             }

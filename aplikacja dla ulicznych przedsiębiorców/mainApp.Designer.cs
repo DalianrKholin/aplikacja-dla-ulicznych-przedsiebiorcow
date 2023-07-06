@@ -55,6 +55,7 @@
             newLocalStreet = new Label();
             newLocalName = new Label();
             groupBox1 = new GroupBox();
+            actionStatus = new Label();
             incidenthMonth = new ComboBox();
             label15 = new Label();
             incidentDay = new ComboBox();
@@ -98,7 +99,6 @@
             label7 = new Label();
             mes1 = new Label();
             refreshMessages = new System.Windows.Forms.Timer(components);
-            actionStatus = new Label();
             menuStrip1.SuspendLayout();
             newLokal.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -353,8 +353,17 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "zaplanuj akcję";
             // 
+            // actionStatus
+            // 
+            actionStatus.AutoSize = true;
+            actionStatus.Location = new Point(98, 274);
+            actionStatus.Name = "actionStatus";
+            actionStatus.Size = new Size(0, 15);
+            actionStatus.TabIndex = 18;
+            // 
             // incidenthMonth
             // 
+            incidenthMonth.DropDownStyle = ComboBoxStyle.DropDownList;
             incidenthMonth.FormattingEnabled = true;
             incidenthMonth.Location = new Point(174, 24);
             incidenthMonth.Name = "incidenthMonth";
@@ -393,7 +402,7 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(185, 275);
+            label14.Location = new Point(267, 275);
             label14.Name = "label14";
             label14.Size = new Size(62, 15);
             label14.TabIndex = 13;
@@ -403,9 +412,9 @@
             // 
             weightOfAction.DropDownStyle = ComboBoxStyle.DropDownList;
             weightOfAction.Items.AddRange(new object[] { "zwykłe", "ciekawe", "legendarne", "międzygwiezdne", "międzygalaktyczne", "o podbój wszechświata" });
-            weightOfAction.Location = new Point(253, 271);
+            weightOfAction.Location = new Point(335, 271);
             weightOfAction.Name = "weightOfAction";
-            weightOfAction.Size = new Size(328, 23);
+            weightOfAction.Size = new Size(246, 23);
             weightOfAction.TabIndex = 12;
             // 
             // addAction
@@ -742,16 +751,8 @@
             // refreshMessages
             // 
             refreshMessages.Enabled = true;
-            refreshMessages.Interval = 60000;
+            refreshMessages.Interval = 5000;
             refreshMessages.Tick += refreshMessages_Tick;
-            // 
-            // actionStatus
-            // 
-            actionStatus.AutoSize = true;
-            actionStatus.Location = new Point(98, 274);
-            actionStatus.Name = "actionStatus";
-            actionStatus.Size = new Size(0, 15);
-            actionStatus.TabIndex = 18;
             // 
             // mainApp
             // 
