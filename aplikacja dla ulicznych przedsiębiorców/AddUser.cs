@@ -40,7 +40,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     recipient = id,
                     sender = id
                 });
-                userConnection.SaveChanges();
+                await userConnection.SaveChangesAsync();
                 passwordInfo.Text = "udało się dodać uzytkownika";
             }
             catch(Exception e) {
