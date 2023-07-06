@@ -38,35 +38,12 @@
             userThingsToolStripMenuItem = new ToolStripMenuItem();
             addNewUserToolStripMenuItem = new ToolStripMenuItem();
             toDoList = new GroupBox();
-            toDo22 = new Button();
-            toDo21 = new Button();
-            toDo20 = new Button();
-            toDo19 = new Button();
-            toDo18 = new Button();
-            toDo17 = new Button();
-            toDo16 = new Button();
-            toDo15 = new Button();
-            toDo13 = new Button();
-            toDo14 = new Button();
-            toDo3 = new Button();
-            toDo4 = new Button();
-            toDo5 = new Button();
-            toDo6 = new Button();
-            toDo7 = new Button();
-            toDo8 = new Button();
-            toDo9 = new Button();
-            toDo10 = new Button();
-            toDo12 = new Button();
-            toDo11 = new Button();
-            toDo2 = new Button();
-            toDo1 = new Button();
             label1 = new Label();
             date = new Label();
             newLokal = new GroupBox();
             button3 = new Button();
             acceptButton = new Button();
             rejectButton = new Button();
-            randomData = new Button();
             textNewLocalStreet = new TextBox();
             textNewLocalNr = new TextBox();
             textNewLocalTribiute = new TextBox();
@@ -78,6 +55,21 @@
             newLocalStreet = new Label();
             newLocalName = new Label();
             groupBox1 = new GroupBox();
+            incidenthMonth = new ComboBox();
+            label15 = new Label();
+            incidentDay = new ComboBox();
+            listPlaces = new ComboBox();
+            label14 = new Label();
+            weightOfAction = new ComboBox();
+            addAction = new Button();
+            label13 = new Label();
+            incidentIncome = new TextBox();
+            helpers = new ListView();
+            label12 = new Label();
+            label11 = new Label();
+            label10 = new Label();
+            label9 = new Label();
+            whatToDo = new TextBox();
             groupBox2 = new GroupBox();
             statusMessage = new Label();
             label8 = new Label();
@@ -86,6 +78,7 @@
             label4 = new Label();
             usersList = new ComboBox();
             messageToUser = new RichTextBox();
+            businessmanBindingSource = new BindingSource(components);
             messageTaken = new GroupBox();
             user1 = new Label();
             mess1 = new TextBox();
@@ -105,10 +98,12 @@
             label7 = new Label();
             mes1 = new Label();
             refreshMessages = new System.Windows.Forms.Timer(components);
+            actionStatus = new Label();
             menuStrip1.SuspendLayout();
-            toDoList.SuspendLayout();
             newLokal.SuspendLayout();
+            groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)businessmanBindingSource).BeginInit();
             messageTaken.SuspendLayout();
             SuspendLayout();
             // 
@@ -176,232 +171,12 @@
             // 
             // toDoList
             // 
-            toDoList.Controls.Add(toDo22);
-            toDoList.Controls.Add(toDo21);
-            toDoList.Controls.Add(toDo20);
-            toDoList.Controls.Add(toDo19);
-            toDoList.Controls.Add(toDo18);
-            toDoList.Controls.Add(toDo17);
-            toDoList.Controls.Add(toDo16);
-            toDoList.Controls.Add(toDo15);
-            toDoList.Controls.Add(toDo13);
-            toDoList.Controls.Add(toDo14);
-            toDoList.Controls.Add(toDo3);
-            toDoList.Controls.Add(toDo4);
-            toDoList.Controls.Add(toDo5);
-            toDoList.Controls.Add(toDo6);
-            toDoList.Controls.Add(toDo7);
-            toDoList.Controls.Add(toDo8);
-            toDoList.Controls.Add(toDo9);
-            toDoList.Controls.Add(toDo10);
-            toDoList.Controls.Add(toDo12);
-            toDoList.Controls.Add(toDo11);
-            toDoList.Controls.Add(toDo2);
-            toDoList.Controls.Add(toDo1);
             toDoList.Location = new Point(1080, 27);
             toDoList.Name = "toDoList";
             toDoList.Size = new Size(200, 632);
             toDoList.TabIndex = 3;
             toDoList.TabStop = false;
-            toDoList.Text = "things to Do";
-            // 
-            // toDo22
-            // 
-            toDo22.Location = new Point(12, 590);
-            toDo22.Name = "toDo22";
-            toDo22.Size = new Size(182, 31);
-            toDo22.TabIndex = 23;
-            toDo22.Text = "button24";
-            toDo22.UseVisualStyleBackColor = true;
-            // 
-            // toDo21
-            // 
-            toDo21.Location = new Point(12, 564);
-            toDo21.Name = "toDo21";
-            toDo21.Size = new Size(182, 31);
-            toDo21.TabIndex = 22;
-            toDo21.Text = "button23";
-            toDo21.UseVisualStyleBackColor = true;
-            // 
-            // toDo20
-            // 
-            toDo20.Location = new Point(12, 536);
-            toDo20.Name = "toDo20";
-            toDo20.Size = new Size(182, 31);
-            toDo20.TabIndex = 21;
-            toDo20.Text = "button22";
-            toDo20.UseVisualStyleBackColor = true;
-            // 
-            // toDo19
-            // 
-            toDo19.Location = new Point(12, 509);
-            toDo19.Name = "toDo19";
-            toDo19.Size = new Size(182, 31);
-            toDo19.TabIndex = 20;
-            toDo19.Text = "button21";
-            toDo19.UseVisualStyleBackColor = true;
-            // 
-            // toDo18
-            // 
-            toDo18.Location = new Point(12, 481);
-            toDo18.Name = "toDo18";
-            toDo18.Size = new Size(182, 31);
-            toDo18.TabIndex = 19;
-            toDo18.Text = "button20";
-            toDo18.UseVisualStyleBackColor = true;
-            // 
-            // toDo17
-            // 
-            toDo17.Location = new Point(12, 456);
-            toDo17.Name = "toDo17";
-            toDo17.Size = new Size(182, 31);
-            toDo17.TabIndex = 18;
-            toDo17.Text = "button19";
-            toDo17.UseVisualStyleBackColor = true;
-            // 
-            // toDo16
-            // 
-            toDo16.Location = new Point(12, 428);
-            toDo16.Name = "toDo16";
-            toDo16.Size = new Size(182, 31);
-            toDo16.TabIndex = 17;
-            toDo16.Text = "button18";
-            toDo16.UseVisualStyleBackColor = true;
-            // 
-            // toDo15
-            // 
-            toDo15.Location = new Point(12, 400);
-            toDo15.Name = "toDo15";
-            toDo15.Size = new Size(182, 31);
-            toDo15.TabIndex = 16;
-            toDo15.Text = "button17";
-            toDo15.UseVisualStyleBackColor = true;
-            // 
-            // toDo13
-            // 
-            toDo13.Location = new Point(12, 347);
-            toDo13.Name = "toDo13";
-            toDo13.Size = new Size(182, 31);
-            toDo13.TabIndex = 15;
-            toDo13.Text = "button16";
-            toDo13.UseVisualStyleBackColor = true;
-            // 
-            // toDo14
-            // 
-            toDo14.Location = new Point(12, 375);
-            toDo14.Name = "toDo14";
-            toDo14.Size = new Size(182, 31);
-            toDo14.TabIndex = 14;
-            toDo14.Text = "button15";
-            toDo14.UseVisualStyleBackColor = true;
-            // 
-            // toDo3
-            // 
-            toDo3.Location = new Point(12, 77);
-            toDo3.Name = "toDo3";
-            toDo3.Size = new Size(182, 31);
-            toDo3.TabIndex = 11;
-            toDo3.Text = "button12";
-            toDo3.UseVisualStyleBackColor = true;
-            // 
-            // toDo4
-            // 
-            toDo4.Location = new Point(12, 105);
-            toDo4.Name = "toDo4";
-            toDo4.Size = new Size(182, 31);
-            toDo4.TabIndex = 10;
-            toDo4.Text = "button11";
-            toDo4.UseVisualStyleBackColor = true;
-            // 
-            // toDo5
-            // 
-            toDo5.Location = new Point(12, 133);
-            toDo5.Name = "toDo5";
-            toDo5.Size = new Size(182, 31);
-            toDo5.TabIndex = 9;
-            toDo5.Text = "button10";
-            toDo5.UseVisualStyleBackColor = true;
-            // 
-            // toDo6
-            // 
-            toDo6.Location = new Point(12, 159);
-            toDo6.Name = "toDo6";
-            toDo6.Size = new Size(182, 31);
-            toDo6.TabIndex = 8;
-            toDo6.Text = "button9";
-            toDo6.UseVisualStyleBackColor = true;
-            // 
-            // toDo7
-            // 
-            toDo7.Location = new Point(12, 188);
-            toDo7.Name = "toDo7";
-            toDo7.Size = new Size(182, 31);
-            toDo7.TabIndex = 7;
-            toDo7.Text = "button8";
-            toDo7.UseVisualStyleBackColor = true;
-            // 
-            // toDo8
-            // 
-            toDo8.Location = new Point(12, 213);
-            toDo8.Name = "toDo8";
-            toDo8.Size = new Size(182, 31);
-            toDo8.TabIndex = 6;
-            toDo8.Text = "button7";
-            toDo8.UseVisualStyleBackColor = true;
-            // 
-            // toDo9
-            // 
-            toDo9.Location = new Point(12, 241);
-            toDo9.Name = "toDo9";
-            toDo9.Size = new Size(182, 31);
-            toDo9.TabIndex = 5;
-            toDo9.Text = "button6";
-            toDo9.UseVisualStyleBackColor = true;
-            // 
-            // toDo10
-            // 
-            toDo10.Location = new Point(12, 266);
-            toDo10.Name = "toDo10";
-            toDo10.Size = new Size(182, 31);
-            toDo10.TabIndex = 4;
-            toDo10.Text = "button5";
-            toDo10.UseVisualStyleBackColor = true;
-            // 
-            // toDo12
-            // 
-            toDo12.Location = new Point(12, 321);
-            toDo12.Name = "toDo12";
-            toDo12.Size = new Size(182, 31);
-            toDo12.TabIndex = 3;
-            toDo12.Text = "button4";
-            toDo12.UseVisualStyleBackColor = true;
-            // 
-            // toDo11
-            // 
-            toDo11.Location = new Point(12, 294);
-            toDo11.Name = "toDo11";
-            toDo11.Size = new Size(182, 31);
-            toDo11.TabIndex = 2;
-            toDo11.Text = "button3";
-            toDo11.UseVisualStyleBackColor = true;
-            // 
-            // toDo2
-            // 
-            toDo2.Location = new Point(12, 50);
-            toDo2.Name = "toDo2";
-            toDo2.Size = new Size(182, 31);
-            toDo2.TabIndex = 1;
-            toDo2.Text = "button2";
-            toDo2.UseVisualStyleBackColor = true;
-            // 
-            // toDo1
-            // 
-            toDo1.Location = new Point(12, 23);
-            toDo1.Name = "toDo1";
-            toDo1.Size = new Size(182, 31);
-            toDo1.TabIndex = 0;
-            toDo1.Text = "thing1";
-            toDo1.UseVisualStyleBackColor = true;
+            toDoList.Text = "things to Do - zmienić na treeView od ważnosci i od kogo są";
             // 
             // label1
             // 
@@ -426,7 +201,6 @@
             newLokal.Controls.Add(button3);
             newLokal.Controls.Add(acceptButton);
             newLokal.Controls.Add(rejectButton);
-            newLokal.Controls.Add(randomData);
             newLokal.Controls.Add(textNewLocalStreet);
             newLokal.Controls.Add(textNewLocalNr);
             newLokal.Controls.Add(textNewLocalTribiute);
@@ -439,14 +213,14 @@
             newLokal.Controls.Add(newLocalName);
             newLokal.Location = new Point(12, 50);
             newLokal.Name = "newLokal";
-            newLokal.Size = new Size(546, 302);
+            newLokal.Size = new Size(469, 302);
             newLokal.TabIndex = 6;
             newLokal.TabStop = false;
             newLokal.Text = "dodaj nowy lokal przedsiębiorco";
             // 
             // button3
             // 
-            button3.Location = new Point(6, 247);
+            button3.Location = new Point(6, 244);
             button3.Name = "button3";
             button3.Size = new Size(109, 50);
             button3.TabIndex = 7;
@@ -456,7 +230,7 @@
             // 
             // acceptButton
             // 
-            acceptButton.Location = new Point(144, 247);
+            acceptButton.Location = new Point(174, 244);
             acceptButton.Name = "acceptButton";
             acceptButton.Size = new Size(109, 50);
             acceptButton.TabIndex = 14;
@@ -466,7 +240,7 @@
             // 
             // rejectButton
             // 
-            rejectButton.Location = new Point(417, 247);
+            rejectButton.Location = new Point(343, 244);
             rejectButton.Name = "rejectButton";
             rejectButton.Size = new Size(109, 50);
             rejectButton.TabIndex = 13;
@@ -474,48 +248,39 @@
             rejectButton.UseVisualStyleBackColor = true;
             rejectButton.Click += rejectButton_Click;
             // 
-            // randomData
-            // 
-            randomData.Location = new Point(281, 247);
-            randomData.Name = "randomData";
-            randomData.Size = new Size(109, 50);
-            randomData.TabIndex = 12;
-            randomData.Text = "wygeneruj losowe";
-            randomData.UseVisualStyleBackColor = true;
-            // 
             // textNewLocalStreet
             // 
             textNewLocalStreet.Location = new Point(100, 70);
             textNewLocalStreet.Name = "textNewLocalStreet";
-            textNewLocalStreet.Size = new Size(440, 23);
+            textNewLocalStreet.Size = new Size(352, 23);
             textNewLocalStreet.TabIndex = 9;
             // 
             // textNewLocalNr
             // 
             textNewLocalNr.Location = new Point(100, 123);
             textNewLocalNr.Name = "textNewLocalNr";
-            textNewLocalNr.Size = new Size(440, 23);
+            textNewLocalNr.Size = new Size(352, 23);
             textNewLocalNr.TabIndex = 8;
             // 
             // textNewLocalTribiute
             // 
             textNewLocalTribiute.Location = new Point(100, 170);
             textNewLocalTribiute.Name = "textNewLocalTribiute";
-            textNewLocalTribiute.Size = new Size(440, 23);
+            textNewLocalTribiute.Size = new Size(352, 23);
             textNewLocalTribiute.TabIndex = 7;
             // 
             // textNewLocalPanishment
             // 
             textNewLocalPanishment.Location = new Point(100, 215);
             textNewLocalPanishment.Name = "textNewLocalPanishment";
-            textNewLocalPanishment.Size = new Size(440, 23);
+            textNewLocalPanishment.Size = new Size(352, 23);
             textNewLocalPanishment.TabIndex = 6;
             // 
             // textNewLocalName
             // 
             textNewLocalName.Location = new Point(100, 24);
             textNewLocalName.Name = "textNewLocalName";
-            textNewLocalName.Size = new Size(440, 23);
+            textNewLocalName.Size = new Size(352, 23);
             textNewLocalName.TabIndex = 5;
             // 
             // newLocalPanishment
@@ -565,12 +330,164 @@
             // 
             // groupBox1
             // 
-            groupBox1.Location = new Point(564, 50);
+            groupBox1.Controls.Add(actionStatus);
+            groupBox1.Controls.Add(incidenthMonth);
+            groupBox1.Controls.Add(label15);
+            groupBox1.Controls.Add(incidentDay);
+            groupBox1.Controls.Add(listPlaces);
+            groupBox1.Controls.Add(label14);
+            groupBox1.Controls.Add(weightOfAction);
+            groupBox1.Controls.Add(addAction);
+            groupBox1.Controls.Add(label13);
+            groupBox1.Controls.Add(incidentIncome);
+            groupBox1.Controls.Add(helpers);
+            groupBox1.Controls.Add(label12);
+            groupBox1.Controls.Add(label11);
+            groupBox1.Controls.Add(label10);
+            groupBox1.Controls.Add(label9);
+            groupBox1.Controls.Add(whatToDo);
+            groupBox1.Location = new Point(487, 50);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(510, 302);
+            groupBox1.Size = new Size(587, 302);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
-            groupBox1.Text = "dodaj jakieś zwykłe akcje";
+            groupBox1.Text = "zaplanuj akcję";
+            // 
+            // incidenthMonth
+            // 
+            incidenthMonth.FormattingEnabled = true;
+            incidenthMonth.Location = new Point(174, 24);
+            incidenthMonth.Name = "incidenthMonth";
+            incidenthMonth.Size = new Size(103, 23);
+            incidenthMonth.TabIndex = 17;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(121, 27);
+            label15.Name = "label15";
+            label15.Size = new Size(47, 15);
+            label15.TabIndex = 16;
+            label15.Text = "miesiac";
+            // 
+            // incidentDay
+            // 
+            incidentDay.DropDownStyle = ComboBoxStyle.DropDownList;
+            incidentDay.FormattingEnabled = true;
+            incidentDay.Location = new Point(48, 24);
+            incidentDay.Name = "incidentDay";
+            incidentDay.Size = new Size(67, 23);
+            incidentDay.TabIndex = 15;
+            // 
+            // listPlaces
+            // 
+            listPlaces.DisplayMember = "name";
+            listPlaces.DropDownStyle = ComboBoxStyle.DropDownList;
+            listPlaces.FormattingEnabled = true;
+            listPlaces.Location = new Point(47, 58);
+            listPlaces.Name = "listPlaces";
+            listPlaces.Size = new Size(533, 23);
+            listPlaces.TabIndex = 14;
+            listPlaces.ValueMember = "name";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(185, 275);
+            label14.Name = "label14";
+            label14.Size = new Size(62, 15);
+            label14.TabIndex = 13;
+            label14.Text = "waga akcji";
+            // 
+            // weightOfAction
+            // 
+            weightOfAction.DropDownStyle = ComboBoxStyle.DropDownList;
+            weightOfAction.Items.AddRange(new object[] { "zwykłe", "ciekawe", "legendarne", "międzygwiezdne", "międzygalaktyczne", "o podbój wszechświata" });
+            weightOfAction.Location = new Point(253, 271);
+            weightOfAction.Name = "weightOfAction";
+            weightOfAction.Size = new Size(328, 23);
+            weightOfAction.TabIndex = 12;
+            // 
+            // addAction
+            // 
+            addAction.Location = new Point(6, 271);
+            addAction.Name = "addAction";
+            addAction.Size = new Size(86, 23);
+            addAction.TabIndex = 11;
+            addAction.Text = "dodaj Akcje";
+            addAction.UseVisualStyleBackColor = true;
+            addAction.Click += addAction_Click;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(10, 62);
+            label13.Name = "label13";
+            label13.Size = new Size(32, 15);
+            label13.TabIndex = 10;
+            label13.Text = "lokal";
+            // 
+            // incidentIncome
+            // 
+            incidentIncome.Location = new Point(473, 22);
+            incidentIncome.Name = "incidentIncome";
+            incidentIncome.Size = new Size(108, 23);
+            incidentIncome.TabIndex = 9;
+            incidentIncome.TextChanged += incidentPlace_TextChanged;
+            // 
+            // helpers
+            // 
+            helpers.Location = new Point(6, 136);
+            helpers.Name = "helpers";
+            helpers.Size = new Size(575, 123);
+            helpers.TabIndex = 8;
+            helpers.UseCompatibleStateImageBehavior = false;
+            helpers.View = View.SmallIcon;
+            helpers.ItemActivate += helpers_ItemActivate;
+            helpers.SelectedIndexChanged += helpers_SelectedIndexChanged;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(6, 118);
+            label12.Name = "label12";
+            label12.Size = new Size(67, 15);
+            label12.TabIndex = 7;
+            label12.Text = "pomocnicy";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(10, 90);
+            label11.Name = "label11";
+            label11.Size = new Size(36, 15);
+            label11.TabIndex = 5;
+            label11.Text = "Akcja";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(283, 27);
+            label10.Name = "label10";
+            label10.Size = new Size(184, 15);
+            label10.TabIndex = 4;
+            label10.Text = "planowany przychód(opcjonalne)";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(6, 27);
+            label9.Name = "label9";
+            label9.Size = new Size(35, 15);
+            label9.TabIndex = 3;
+            label9.Text = "dzień";
+            // 
+            // whatToDo
+            // 
+            whatToDo.Location = new Point(47, 87);
+            whatToDo.Name = "whatToDo";
+            whatToDo.Size = new Size(534, 23);
+            whatToDo.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -586,7 +503,7 @@
             groupBox2.Size = new Size(413, 297);
             groupBox2.TabIndex = 8;
             groupBox2.TabStop = false;
-            groupBox2.Text = "wyślij wiadomość do użytkownika";
+            groupBox2.Text = "wyślij wiadomość do użytkownika - w combo dodać contextMenu dla ręcznego wpisywania";
             // 
             // statusMessage
             // 
@@ -627,7 +544,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(6, 24);
+            label4.Location = new Point(6, 31);
             label4.Name = "label4";
             label4.Size = new Size(116, 15);
             label4.TabIndex = 2;
@@ -652,6 +569,10 @@
             messageToUser.Enter += messageToUser_Enter;
             messageToUser.Leave += messageToUser_Leave;
             // 
+            // businessmanBindingSource
+            // 
+            businessmanBindingSource.DataSource = typeof(Businessman);
+            // 
             // messageTaken
             // 
             messageTaken.Controls.Add(user1);
@@ -669,7 +590,7 @@
             messageTaken.Size = new Size(643, 297);
             messageTaken.TabIndex = 9;
             messageTaken.TabStop = false;
-            messageTaken.Text = "new message";
+            messageTaken.Text = "new message - zmienić na treeView od danego użytkownika";
             messageTaken.Enter += messageTaken_Enter;
             // 
             // user1
@@ -824,6 +745,14 @@
             refreshMessages.Interval = 60000;
             refreshMessages.Tick += refreshMessages_Tick;
             // 
+            // actionStatus
+            // 
+            actionStatus.AutoSize = true;
+            actionStatus.Location = new Point(98, 274);
+            actionStatus.Name = "actionStatus";
+            actionStatus.Size = new Size(0, 15);
+            actionStatus.TabIndex = 18;
+            // 
             // mainApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -851,11 +780,13 @@
             MouseMove += mainApp_MouseMove;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            toDoList.ResumeLayout(false);
             newLokal.ResumeLayout(false);
             newLokal.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)businessmanBindingSource).EndInit();
             messageTaken.ResumeLayout(false);
             messageTaken.PerformLayout();
             ResumeLayout(false);
@@ -870,28 +801,6 @@
         private ToolStripMenuItem buttonToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
         private GroupBox toDoList;
-        private Button toDo22;
-        private Button toDo21;
-        private Button toDo20;
-        private Button toDo19;
-        private Button toDo18;
-        private Button toDo17;
-        private Button toDo16;
-        private Button toDo15;
-        private Button toDo13;
-        private Button toDo14;
-        private Button toDo3;
-        private Button toDo4;
-        private Button toDo5;
-        private Button toDo6;
-        private Button toDo7;
-        private Button toDo8;
-        private Button toDo9;
-        private Button toDo10;
-        private Button toDo12;
-        private Button toDo11;
-        private Button toDo2;
-        private Button toDo1;
         private ToolStripMenuItem logoutToolStripMenuItem;
         private Label label1;
         private Label date;
@@ -909,8 +818,7 @@
         private Label newLocalStreet;
         private Label newLocalName;
         private Button button2;
-        private Button button1;
-        private Button randomData;
+        private Button addAction;
         private Button rejectButton;
         private Button acceptButton;
         private Button button3;
@@ -942,5 +850,21 @@
         private System.Windows.Forms.Timer refreshMessages;
         private Label statusMessage;
         private Label label8;
+        private Label label11;
+        private Label label10;
+        private Label label9;
+        private TextBox whatToDo;
+        private Label label12;
+        private ListView helpers;
+        private Label label13;
+        private TextBox incidentIncome;
+        private ComboBox weightOfAction;
+        private Label label14;
+        private BindingSource businessmanBindingSource;
+        private ComboBox listPlaces;
+        private ComboBox incidentDay;
+        private Label label15;
+        private ComboBox incidenthMonth;
+        private Label actionStatus;
     }
 }

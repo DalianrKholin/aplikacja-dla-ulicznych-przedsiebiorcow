@@ -9,20 +9,24 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         { }
         public myDataContexUsers() : base(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true") 
         { }
-        public DbSet<Bissnesman> persons { get; set; }
+        public DbSet<Businessman> persons { get; set; }
         public DbSet<Message> messages { get; set; }
         public DbSet<Place> places { get; set; }
         public DbSet<ToDoTask> toDoTasks { get; set; }
-        public DbSet<PlaceBissnesma> tasks { get; set; }
+        public DbSet<PlaceB> tasks { get; set; }
     }
     public class ToDoTask
     {
         public int ID { get; set; }
         public string toDo { get; set; }
+        public int weightOfTask { get; set; }
+        public int? income { get; set; }
         public DateTime date { get; set; }
-        public Bissnesman execiutioner { get; set; }
+        public Businessman headOfAcction { get; set; }
+        public Place unluckyIncidentSite { get; set; }
+        public List<Businessman>? executioners { get; set; } = new List<Businessman>();
     }
-    public class Bissnesman
+    public class Businessman
     {
         public int ID { get; set; }
         [MaxLength(20)]
@@ -31,7 +35,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         public string pass { get; set; }
         public bool adminPass { get; set; }
         public int messageCounter { get; set; }
-        public List<PlaceBissnesma>? joiner { get; set; } = new List<PlaceBissnesma>();
+        public List<PlaceB>? joiner { get; set; } = new List<PlaceB>();
         public List<Place>? places { get; set; } = new List<Place> { };
     }
     public class Message
@@ -40,8 +44,8 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         [MaxLength(500)]
         public string item { get; set; }
         public DateTime date { get; set; }
-        public Bissnesman sender { get; set; }
-        public Bissnesman recipient { get; set; }
+        public Businessman sender { get; set; }
+        public Businessman recipient { get; set; }
 
     }
     public class Place
@@ -56,14 +60,14 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         public int tribiute { get; set; }
         [MaxLength(100)]
         public string? panishment { get; set; }
-        public List<Bissnesman> protectors { get; set; } = new List<Bissnesman>();
+        public List<Businessman> protectors { get; set; } = new List<Businessman>();
     }
-    public class PlaceBissnesma
+    public class PlaceB
     {
         public int ID { get; set; }
         public int PlaceID { get; set; }
         public int BissnesmanID { get; set; }
         public Place place { get; set; }
-        public Bissnesman bissnesman { get; set; }
+        public Businessman businessman { get; set; }
     }
 }

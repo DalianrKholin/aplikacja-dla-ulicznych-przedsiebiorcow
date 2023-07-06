@@ -24,7 +24,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     passwordInfo.Text = "w bazie wystepuje użytkownik o takiej nazwie, proszę o wybranie innej";
                     return;
                 }
-                userConnection.persons.Add(new Bissnesman
+                userConnection.persons.Add(new Businessman
                 {
                     name = user,
                     pass = hasz,

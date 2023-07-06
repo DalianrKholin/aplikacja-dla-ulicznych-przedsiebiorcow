@@ -17,7 +17,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             MessageBox.Show("2");
             connect = new myDataContexUsers(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true;multipleactiveresultsets=true");
             MessageBox.Show("2");
-            connect.persons.Add(new Bissnesman
+            connect.persons.Add(new Businessman
             {
                 name = "dalinarKholin",
                 pass = "2309acb4a88359a4ba3c164006ca607da331dec15468f9f2645bb21436b44d90",
@@ -42,7 +42,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 street = "lozl",
                 number = 1,
                 tribiute = 1,
-                protectors = new List<Bissnesman>() { persona }
+                protectors = new List<Businessman>() { persona }
             });
             MessageBox.Show("1");
             connect.SaveChanges();

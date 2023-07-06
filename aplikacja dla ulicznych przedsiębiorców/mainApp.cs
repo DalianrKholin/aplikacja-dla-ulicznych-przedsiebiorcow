@@ -20,14 +20,14 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         private Thread session;
         private bool sessionStoper;
         public bool isAdmin { get; set; }
-        private string connectS = string.Empty;
         private string _name;
         public myDataContexUsers userConnect;
         public List<TextBox> toZero = new List<TextBox>();
-        public Bissnesman usersData;
+        public Businessman usersData;
         private Queue<Message> qMessage = new Queue<Message>();
         private List<TextBox> messagesTextBoxList = new List<TextBox>();
         private List<Label> messagesLabelList = new List<Label>();
+        private List<string> helperList { get; set; } = new List<string>() ;
         public string username
         {
             get { return _name; }
@@ -64,14 +64,29 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             session = new Thread(() => focusSession());
             new Thread(() => { reinicjacjaDanychIWiadomosci(); }).Start();
             session.Start();
+            for (int i = 1; i < 32; i++)
+            {
+                if (i <= 12)
+                {
+                    incidenthMonth.Items.Add(i.ToString());
+                }
+                incidentDay.Items.Add(i.ToString());
+            }
         }
         private async Task reinicjacjaDanychIWiadomosci()
         {
+            //część message
             usersData = userConnect.persons.Single(e => e.name == username);
             usersList.Items.Clear();
+            listPlaces.Items.Clear();
+            helpers.Items.Clear();
             foreach (var item in userConnect.persons)
             {
-                usersList.Items.Add(item.name);
+                if (item.name != username)
+                {
+                    usersList.Items.Add(item.name);
+                    helpers.Items.Add(item.name);
+                }
             }
             if (userConnect.messages.Any((e => e.recipient.name == usersData.name && e.ID > usersData.messageCounter)))
             {
@@ -82,6 +97,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 usersData.messageCounter = qMessage.Peek().ID;
                 userConnect.SaveChanges();
             }
+
             messageTaken.Text = "new messages = " + qMessage.Count.ToString();
             for (int i = 0; i < 5; i++)
             {
@@ -94,9 +110,17 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 messagesTextBoxList[i].Visible = true;
                 messagesLabelList[i].Visible = true;
                 Message message = qMessage.Dequeue();
-                messagesLabelList[i].Text = ("user: " + message.sender.name.ToString()).PadRight(30)+message.date;
+                messagesLabelList[i].Text = ("user: " + message.sender.name.ToString()).PadRight(30) + message.date;
                 messagesTextBoxList[i].Text = message.item;
             }
+            // część Taskowa
+            foreach (var item in userConnect.places.
+                Where(e => e.protectors
+                    .Any(p => p.ID == usersData.ID)))
+            {
+                listPlaces.Items.Add(item);
+            }
+
         }
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -155,7 +179,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         {
             try
             {
-                
+
                 if (userConnect.places.Any(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocalNr.Text)))
                 {
                     if (userConnect.places.Any(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocalNr.Text && (e.protectors.Any(u => e.ID == usersData.ID)))))
@@ -173,7 +197,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 {
                     Place place = new Place
                     {
-                        protectors = new List<Bissnesman>(),
+                        protectors = new List<Businessman>(),
                         name = textNewLocalName.Text,
                         street = textNewLocalStreet.Text,
                         number = textNewLocalNr.Text == "" ? 10 : Convert.ToInt32(textNewLocalNr.Text),
@@ -182,7 +206,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     };
                     place.protectors.Add(usersData);
                     userConnect.places.Add(place);
-                    
+
 
                 }
                 userConnect.SaveChanges();
@@ -213,11 +237,11 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 
         private async Task save()
         {
-            
+
             await userConnect.SaveChangesAsync();
             newLokal.Text = newLokal.Text.Replace(" - sa zmiany do zapisu", " - udało się dodać użytkownika");
-            
-        } 
+
+        }
 
         private void button3_Click_1(object sender, EventArgs e)
         {
@@ -270,7 +294,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 item = messageToUser.Text,
                 recipient = member,
                 date = DateTime.Now
-                
+
             });
 
             userConnect.SaveChanges();
@@ -301,6 +325,79 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         private void messageToUser_Leave(object sender, EventArgs e)
         {
             statusMessage.Text = "";
+        }
+
+        private void incidentPlace_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void helpers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void helpers_ItemActivate(object sender, EventArgs e)
+        {
+            int index = helpers.SelectedItems[0].Index;
+            var x = helpers.Items[helpers.SelectedItems[0].Index];
+            if (helperList.Any(e => e == x.Text))
+            {
+                helpers.Items[index].Text = helpers.Items[index].Text.Replace("\u2714", "");
+                helperList.Remove(x.Text);
+            }
+            else
+            {
+                helperList.Add(x.Text + '\u2714');
+                helpers.Items[index].Text += '\u2714';
+            }
+            helpers.Refresh();
+            //"\u2714"
+        }
+        private async Task addActionTask()
+        {
+            try
+            {
+
+
+                actionStatus.Text = "wysyłanie";
+                List<Businessman> tsotsi = new List<Businessman>();
+                foreach (var items in helperList)
+                {
+                    tsotsi.Add(userConnect.persons.Single(e => e.name == items.Replace("\u2714", "")));
+                }
+                string myPlace = ((Place)listPlaces.Items[listPlaces.SelectedIndex]).name;
+                ToDoTask newTask = new ToDoTask()
+                {
+                    toDo = whatToDo.Text,
+                    weightOfTask = weightOfAction.SelectedIndex,
+                    income = incidentIncome.Text == "" ? null : Convert.ToInt32(incidentIncome.Text),
+                    date = new DateTime(2023, Convert.ToInt32(incidenthMonth.Text), Convert.ToInt32(incidentDay.Text)),
+                    headOfAcction = usersData,
+                    unluckyIncidentSite = userConnect.places.Single(e => e.name == myPlace),//(Place)listPlaces.Items[listPlaces.SelectedIndex],
+                    executioners = tsotsi.Count == 0 ? null : tsotsi
+                };
+
+                await userConnect.SaveChangesAsync();
+                actionStatus.Text = "udało się wysławć wiadomość";
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            
+        }
+
+        private void addAction_Click(object sender, EventArgs e)
+        {
+            if (incidenthMonth.SelectedIndex == -1 || incidentDay.SelectedIndex== -1 || listPlaces.SelectedIndex==-1 || whatToDo.Text==string.Empty || weightOfAction.SelectedIndex == -1 )
+            {
+                actionStatus.Text = "proszę uzupełnić dane ok?";
+            }
+            else
+            {
+                new Thread(() => { addActionTask(); }).Start();
+            }
         }
     }
 }
