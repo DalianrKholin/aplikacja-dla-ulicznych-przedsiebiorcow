@@ -23,6 +23,11 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             InitializeComponent();
         }
 
+        private async Task passwordCheckAsync()
+        {
+            passwordCheck();
+        }
+
         private void passwordCheck()
         {
 
@@ -53,7 +58,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         }
         protected override void AcceptButton_Click(object sender, EventArgs e)
         {
-            passwordCheck();
+            new Thread (() => { passwordCheck(); }).Start();
         }
 
         private void enterApp_FormClosing(object sender, FormClosingEventArgs e)

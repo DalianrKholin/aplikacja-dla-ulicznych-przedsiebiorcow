@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Collections;
+using Microsoft.VisualBasic;
 
 namespace aplikacja_dla_ulicznych_przedsiębiorców
 {
@@ -113,13 +114,15 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     .Any(a => a.ID == usersData.ID) ||
                     p.headOfAcction.ID == usersData.ID))
                 {
+                    dIncome += item.income == null ? 0 : (int)(item.income);
                     treeToDo.Nodes[item.weightOfTask].Nodes.Add(item.toDo);
-                    dIncome += item.income == null ? 0 : (int)item.income;
+                    
+                    
                 }
             }
             catch (Exception e)
             {
-                treeToDo.Nodes.Add("coś sie wywaliło");
+                treeToDo.Nodes.Add("coś poszło nie tak :(");
             }
         }
 
