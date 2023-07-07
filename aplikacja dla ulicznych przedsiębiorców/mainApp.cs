@@ -16,32 +16,58 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 {
     public partial class mainApp : Form
     {
-        private int lastMove;
-        private Thread session;
-        private bool sessionStoper;
-        public bool isAdmin { get; set; }
+        private int lastMove; //last mause move
+        private Thread session; // thraed protecting time of use aplicatio
+        private bool sessionStoper; // synchonizer for session thread
+        public bool isAdmin { get; set; } // says that, can user add user
         private string _name;
-        public myDataContexUsers userConnect;
-        public List<TextBox> toZero = new List<TextBox>();
-        public Businessman usersData;
-        private Queue<Message> qMessage = new Queue<Message>();
-        private List<TextBox> messagesTextBoxList = new List<TextBox>();
-        private List<Label> messagesLabelList = new List<Label>();
-        private List<string> helperList { get; set; } = new List<string>();
-        public string username
+        public myDataContexUsers userConnect; //connection to data Base
+        public List<TextBox> toZero = new List<TextBox>(); // list of textbox that have to be cleared after logout
+        public Businessman usersData; // self-descriptive
+        private Queue<Message> qMessage = new Queue<Message>(); //new message taken from DB
+        private List<TextBox> messagesTextBoxList = new List<TextBox>();// facilitating the handling of the messaging mechanism and resmoothing of code
+        private List<Label> messagesLabelList = new List<Label>();//facilitating the handling of the messaging mechanism and resmoothing of code
+        private List<string> helperList { get; set; } = new List<string>(); // list of user that will help us in new task
+        public string username //user nick
         {
             get { return _name; }
             set
             {
-                _name = value;
+                _name = value.ToLower();
                 labelUser.Text = value;
+            }
+        }
+        private int _mIncome;
+        private int mIncome
+        {
+            get
+            {
+                return _mIncome;
+            }
+            set
+            {
+                monthlyIncome.Text = value.ToString();
+                _mIncome = value;
+            }
+        }
+        private int _dIncome;
+        private int dIncome
+        {
+            get
+            {
+                return _dIncome;
+            }
+            set
+            {
+                dailyIncome.Text = value.ToString();
+                _dIncome = value;
             }
         }
         public mainApp()
         {
-            userConnect = new myDataContexUsers(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true;multipleactiveresultsets=true");
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<myDataContexUsers, aplikacja_dla_ulicznych_przedsiębiorców.Migrations.Configuration>());
-            enterApp login = new enterApp(this, userConnect);
+            userConnect = new myDataContexUsers(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true;multipleactiveresultsets=true");// setting connection to dataBase
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<myDataContexUsers, aplikacja_dla_ulicznych_przedsiębiorców.Migrations.Configuration>());//migration of database mechanism
+            enterApp login = new enterApp(this, userConnect); //logging to mainApp window
             InitializeComponent();
             login.ShowDialog();
             //obrzydliwy kod alert
@@ -81,13 +107,14 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     weightOfAction.Items.Add(item);
                     treeToDo.Nodes.Add(item);
                 }
-                foreach (var item in userConnect.toDoTasks
+                foreach (var item in userConnect.toDoTasks //eking of TaskToDO treeView 
                     .Where(e => e.date.Month == DateTime.Now.Month && e.date.Day == DateTime.Now.Day)
                     .Where(p => p.executioners
-                    .Any(a => a.ID==usersData.ID) ||
+                    .Any(a => a.ID == usersData.ID) ||
                     p.headOfAcction.ID == usersData.ID))
                 {
                     treeToDo.Nodes[item.weightOfTask].Nodes.Add(item.toDo);
+                    dIncome += item.income == null ? 0 : (int)item.income;
                 }
             }
             catch (Exception e)
@@ -98,21 +125,28 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 
         private async Task reinicjacjaDanychIWiadomosci()
         {
-            //część message
             int[] indexTab = new int[2] { usersList.SelectedIndex, listPlaces.SelectedIndex };
-            usersList.Items.Clear();
-            listPlaces.Items.Clear();
-            helpers.Items.Clear();
 
+            listPlaces.Items.Clear();
+            usersList.Items.Clear();
+
+            helpers.Items.Clear();
             foreach (var item in userConnect.persons)
             {
-                usersList.Items.Add(item.name); // do wciągnięcia pod ifa, nie można sobie samemu wysyłać wiadomości
-                if (item.name != username)
+                if (item.name.ToLower() != username) // user cant send message to himself and help himself into tasks
                 {
-
+                    usersList.Items.Add(item.name);
                     helpers.Items.Add(item.name);
                 }
             }
+            usersList.SelectedIndex = indexTab[0];
+            foreach (var x in helperList)
+            {
+                helpers.Items[helpers.FindItemWithText(x.Replace("\u2714", "")).Index].Text = x;
+            }
+
+            listPlaces.SelectedIndex = indexTab[1];
+
             if (userConnect.messages.Any((e => e.recipient.name == usersData.name && e.ID > usersData.messageCounter)))
             {
                 foreach (var item in userConnect.messages.Where(e => e.recipient.name == usersData.name && e.ID > usersData.messageCounter).OrderBy(e => -e.ID))
@@ -124,7 +158,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             }
 
             messageTaken.Text = "new messages = " + qMessage.Count.ToString();
-            if (qMessage.Count != 0 || messagesLabelList[0].Text == "label13")
+            if (qMessage.Count != 0 || messagesLabelList[0].Text == "label13") //if there is no new message, we leave old alone 
             {
                 for (int i = 0; i < 5; i++)
                 {
@@ -141,19 +175,16 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                     messagesTextBoxList[i].Text = message.item;
                 }
             }
-            // część Taskowa
+            mIncome = 0;
             foreach (var item in userConnect.places.
                 Where(e => e.protectors
                     .Any(p => p.ID == usersData.ID)))
             {
                 listPlaces.Items.Add(item);
+                mIncome += item.tribiute;
             }
-            foreach (var x in helperList)
-            {
-                helpers.Items[helpers.FindItemWithText(x.Replace("\u2714", "")).Index].Text = x;
-            }
-            usersList.SelectedIndex = indexTab[0];
-            listPlaces.SelectedIndex = indexTab[1];
+
+
         }
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -162,11 +193,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*
-             TODO 
-            zamknąc połaczenie z bazą, pozapisywać wszystko
-            wyzerować wszystkie zmienne a potem otworzyć ponownie okno logowania
-             */
             sessionStoper = true;
             foreach (var z in toZero)
             {
@@ -176,6 +202,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             refreshMessages.Stop();
             this.Hide();
             new enterApp(this, userConnect).ShowDialog();
+            treeToDo.Visible = false;
             lastMove = 120;
             sessionStoper = false;
             session = new Thread(() => focusSession());
@@ -214,20 +241,20 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             {
 
                 if (userConnect.places.Any(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocalNr.Text)))
-                {
+                {//local exist in data base
                     if (userConnect.places.Any(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocalNr.Text && (e.protectors.Any(u => e.ID == usersData.ID)))))
-                    {
+                    {//user already owned this local
                         MessageBox.Show("ten lokal aktualnie istnieje w bazie");
                         return;
                     }
                     else
-                    {
+                    {//if local exist we just add user to list of protectors
                         var place = userConnect.places.Single(e => (e.name == textNewLocalName.Text && e.street == textNewLocalStreet.Text && e.number.ToString() == textNewLocalNr.Text));
                         place.protectors.Add(usersData);
                     }
                 }
                 else
-                {
+                {//if local didnt exist we add it to database 
                     Place place = new Place
                     {
                         protectors = new List<Businessman>(),
@@ -242,23 +269,22 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 
 
                 }
-                userConnect.SaveChanges();
+                await userConnect.SaveChangesAsync();
                 textNewLocalName.Text = "";
                 textNewLocalPanishment.Text = "";
                 textNewLocalStreet.Text = "";
                 textNewLocalTribiute.Text = "";
                 textNewLocalNr.Text = "";
-                newLokal.Text += " - udało się zapisać zmiany";
+                newLokal.Text += " - udało się zapisać zmiany"; // cleaning after message
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
             }
         }
 
         private void acceptButton_Click(object sender, EventArgs e)
         {
-            if (textNewLocalName.Text != null && textNewLocalStreet.Text != null && textNewLocalTribiute.Text != null)
+            if (textNewLocalName.Text != null && textNewLocalStreet.Text != null && textNewLocalTribiute.Text != null) // if any of it is not set database will blow up
             {
                 new Thread(() => addToDataBase()).Start();
             }
@@ -288,7 +314,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
 
         private async Task focusSession()
         {
-            while (lastMove-- > 0)
+            while (lastMove-- > 0) //every one second it decreasing number of second to logout, and when it hit 0 logout user
             {
                 if (sessionStoper) return;
                 logoutTimew.Text = lastMove.ToString();
@@ -299,12 +325,12 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         }
         private void mainApp_MouseMove(object sender, MouseEventArgs e)
         {
-            lastMove = 120;
+            lastMove = 120;//set time to auttomatic logout to 2 min
         }
 
         private void mainApp_mouseMove(object sender, EventArgs e)
         {
-            lastMove = 120;
+            lastMove = 120;//set time to auttomatic logout to 2 min
         }
 
         private async Task sendMessageAcction()
@@ -327,10 +353,9 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 item = messageToUser.Text,
                 recipient = member,
                 date = DateTime.Now
-
             });
 
-            userConnect.SaveChanges();
+            await userConnect.SaveChangesAsync();
             messageToUser.Text = "";
             statusMessage.Text = "udało się wysłać wiadomość";
         }
@@ -339,12 +364,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             new Thread(() => { sendMessageAcction(); }).Start();
 
         }
-
-        private void messageTaken_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void refreshMessages_Tick(object sender, EventArgs e)
         {
             new Thread(() => { reinicjacjaDanychIWiadomosci(); }).Start();
@@ -360,21 +379,12 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
             statusMessage.Text = "";
         }
 
-        private void incidentPlace_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void helpers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void helpers_ItemActivate(object sender, EventArgs e)
         {
             int index = helpers.SelectedItems[0].Index;
             var x = helpers.Items[helpers.SelectedItems[0].Index];
-            string y = x.Text;
+            string y = x.Text; //c# pointers mechanism suck :(
             if (helperList.Any(e => e == x.Text))
             {
                 helpers.Items[index].Text = helpers.Items[index].Text.Replace("\u2714", "");
@@ -386,7 +396,6 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 helpers.Items[index].Text += "\u2714";
             }
             helpers.Refresh();
-            //"\u2714"
         }
         private async Task addActionTask()
         {
@@ -396,7 +405,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 List<Businessman> tsotsi = new List<Businessman>();
                 foreach (var items in helperList)
                 {
-                    tsotsi.Add(userConnect.persons.Single(e => e.name == items.Replace("\u2714", "")));
+                    tsotsi.Add(userConnect.persons.Single(e => e.name == items.Replace("\u2714", ""))); // why we replace "\u2714", its checkmark utf char that we add if user is chcecked
                 }
                 string myPlace = ((Place)listPlaces.Items[listPlaces.SelectedIndex]).name;
                 ToDoTask newTask = new ToDoTask()

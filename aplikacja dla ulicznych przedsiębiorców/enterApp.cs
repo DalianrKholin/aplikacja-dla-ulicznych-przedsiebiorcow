@@ -26,7 +26,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         private void passwordCheck()
         {
 
-                password = coder(password);
+                password = coder(password==null ? "" : password);
                 if (!userConnection.persons.Any(e => (e.name.Trim() == user && e.pass == password)))
                 {
                     textPass.Text = "";

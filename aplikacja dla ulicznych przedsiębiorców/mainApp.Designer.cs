@@ -100,6 +100,8 @@
             refreshMessages = new System.Windows.Forms.Timer(components);
             treeToDo = new TreeView();
             label16 = new Label();
+            label17 = new Label();
+            dailyIncome = new Label();
             menuStrip1.SuspendLayout();
             newLokal.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -434,7 +436,6 @@
             incidentIncome.Name = "incidentIncome";
             incidentIncome.Size = new Size(108, 23);
             incidentIncome.TabIndex = 9;
-            incidentIncome.TextChanged += incidentPlace_TextChanged;
             // 
             // helpers
             // 
@@ -445,7 +446,6 @@
             helpers.UseCompatibleStateImageBehavior = false;
             helpers.View = View.SmallIcon;
             helpers.ItemActivate += helpers_ItemActivate;
-            helpers.SelectedIndexChanged += helpers_SelectedIndexChanged;
             // 
             // label12
             // 
@@ -592,7 +592,6 @@
             messageTaken.TabIndex = 9;
             messageTaken.TabStop = false;
             messageTaken.Text = "new message - zmienić na treeView od danego użytkownika";
-            messageTaken.Enter += messageTaken_Enter;
             // 
             // user1
             // 
@@ -707,16 +706,16 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(554, 24);
+            label5.Location = new Point(585, 24);
             label5.Name = "label5";
-            label5.Size = new Size(72, 15);
+            label5.Size = new Size(208, 15);
             label5.TabIndex = 12;
-            label5.Text = "a na miesiąc";
+            label5.Text = "mieisęczny przychód z tytułu protekcji";
             // 
             // monthlyIncome
             // 
             monthlyIncome.AutoSize = true;
-            monthlyIncome.Location = new Point(641, 24);
+            monthlyIncome.Location = new Point(799, 24);
             monthlyIncome.Name = "monthlyIncome";
             monthlyIncome.Size = new Size(38, 15);
             monthlyIncome.TabIndex = 13;
@@ -762,11 +761,31 @@
             label16.TabIndex = 15;
             label16.Text = "zadania bojowe na dzisiajh";
             // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(861, 24);
+            label17.Name = "label17";
+            label17.Size = new Size(189, 15);
+            label17.TabIndex = 16;
+            label17.Text = "przychód dnia dzisiejszego z zadań";
+            // 
+            // dailyIncome
+            // 
+            dailyIncome.AutoSize = true;
+            dailyIncome.Location = new Point(1080, 24);
+            dailyIncome.Name = "dailyIncome";
+            dailyIncome.Size = new Size(44, 15);
+            dailyIncome.TabIndex = 17;
+            dailyIncome.Text = "label18";
+            // 
             // mainApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1299, 665);
+            Controls.Add(dailyIncome);
+            Controls.Add(label17);
             Controls.Add(label16);
             Controls.Add(treeToDo);
             Controls.Add(monthlyIncome);
@@ -877,5 +896,7 @@
         private Label actionStatus;
         private TreeView treeToDo;
         private Label label16;
+        private Label label17;
+        private Label dailyIncome;
     }
 }

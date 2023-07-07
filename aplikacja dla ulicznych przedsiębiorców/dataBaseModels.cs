@@ -17,6 +17,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
     public class ToDoTask
     {
         public int ID { get; set; }
+        [MaxLength(300)]
         public string toDo { get; set; }
         public int weightOfTask { get; set; }
         public int? income { get; set; }
