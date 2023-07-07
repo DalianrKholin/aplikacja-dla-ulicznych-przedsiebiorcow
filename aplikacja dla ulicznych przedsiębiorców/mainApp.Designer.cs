@@ -37,7 +37,6 @@
             logoutToolStripMenuItem = new ToolStripMenuItem();
             userThingsToolStripMenuItem = new ToolStripMenuItem();
             addNewUserToolStripMenuItem = new ToolStripMenuItem();
-            toDoList = new GroupBox();
             label1 = new Label();
             date = new Label();
             newLokal = new GroupBox();
@@ -99,6 +98,8 @@
             label7 = new Label();
             mes1 = new Label();
             refreshMessages = new System.Windows.Forms.Timer(components);
+            treeToDo = new TreeView();
+            label16 = new Label();
             menuStrip1.SuspendLayout();
             newLokal.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -130,7 +131,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { buttonToolStripMenuItem, userThingsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1292, 24);
+            menuStrip1.Size = new Size(1299, 24);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -168,15 +169,6 @@
             addNewUserToolStripMenuItem.Size = new Size(141, 22);
             addNewUserToolStripMenuItem.Text = "addNewUser";
             addNewUserToolStripMenuItem.Click += addNewUserToolStripMenuItem_Click;
-            // 
-            // toDoList
-            // 
-            toDoList.Location = new Point(1080, 27);
-            toDoList.Name = "toDoList";
-            toDoList.Size = new Size(200, 632);
-            toDoList.TabIndex = 3;
-            toDoList.TabStop = false;
-            toDoList.Text = "things to Do - zmienić na treeView od ważnosci i od kogo są";
             // 
             // label1
             // 
@@ -411,11 +403,11 @@
             // weightOfAction
             // 
             weightOfAction.DropDownStyle = ComboBoxStyle.DropDownList;
-            weightOfAction.Items.AddRange(new object[] { "zwykłe", "ciekawe", "legendarne", "międzygwiezdne", "międzygalaktyczne", "o podbój wszechświata" });
             weightOfAction.Location = new Point(335, 271);
             weightOfAction.Name = "weightOfAction";
             weightOfAction.Size = new Size(246, 23);
             weightOfAction.TabIndex = 12;
+            weightOfAction.Tag = "";
             // 
             // addAction
             // 
@@ -754,11 +746,29 @@
             refreshMessages.Interval = 5000;
             refreshMessages.Tick += refreshMessages_Tick;
             // 
+            // treeToDo
+            // 
+            treeToDo.Location = new Point(1080, 72);
+            treeToDo.Name = "treeToDo";
+            treeToDo.Size = new Size(207, 583);
+            treeToDo.TabIndex = 14;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(1080, 54);
+            label16.Name = "label16";
+            label16.Size = new Size(147, 15);
+            label16.TabIndex = 15;
+            label16.Text = "zadania bojowe na dzisiajh";
+            // 
             // mainApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1292, 667);
+            ClientSize = new Size(1299, 665);
+            Controls.Add(label16);
+            Controls.Add(treeToDo);
             Controls.Add(monthlyIncome);
             Controls.Add(label5);
             Controls.Add(logoutTimew);
@@ -769,7 +779,6 @@
             Controls.Add(newLokal);
             Controls.Add(date);
             Controls.Add(label1);
-            Controls.Add(toDoList);
             Controls.Add(label2);
             Controls.Add(labelUser);
             Controls.Add(menuStrip1);
@@ -801,7 +810,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem buttonToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem1;
-        private GroupBox toDoList;
         private ToolStripMenuItem logoutToolStripMenuItem;
         private Label label1;
         private Label date;
@@ -867,5 +875,7 @@
         private Label label15;
         private ComboBox incidenthMonth;
         private Label actionStatus;
+        private TreeView treeToDo;
+        private Label label16;
     }
 }

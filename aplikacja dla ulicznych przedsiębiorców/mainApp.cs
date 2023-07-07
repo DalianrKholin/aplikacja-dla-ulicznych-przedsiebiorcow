@@ -73,7 +73,29 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 }
                 incidentDay.Items.Add(i.ToString());
             }
+            string[] nazwy = { "zwykłe", "ciekawe", "legendarne", "międzygwiezdne", "międzygalaktyczne", "o podbój wszechświata" };
+            try
+            {
+                foreach (var item in nazwy)
+                {
+                    weightOfAction.Items.Add(item);
+                    treeToDo.Nodes.Add(item);
+                }
+                foreach (var item in userConnect.toDoTasks
+                    .Where(e => e.date.Month == DateTime.Now.Month && e.date.Day == DateTime.Now.Day)
+                    .Where(p => p.executioners
+                    .Any(a => a.ID==usersData.ID) ||
+                    p.headOfAcction.ID == usersData.ID))
+                {
+                    treeToDo.Nodes[item.weightOfTask].Nodes.Add(item.toDo);
+                }
+            }
+            catch (Exception e)
+            {
+                treeToDo.Nodes.Add("coś sie wywaliło");
+            }
         }
+
         private async Task reinicjacjaDanychIWiadomosci()
         {
             //część message
@@ -211,7 +233,7 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                         protectors = new List<Businessman>(),
                         name = textNewLocalName.Text,
                         street = textNewLocalStreet.Text,
-                        number = textNewLocalNr.Text == "" ? 10 : Convert.ToInt32(textNewLocalNr.Text),
+                        number = textNewLocalNr.Text == "" ? null : Convert.ToInt32(textNewLocalNr.Text),
                         panishment = textNewLocalPanishment.Text == "" ? "" : textNewLocalPanishment.Text,
                         tribiute = Convert.ToInt32(textNewLocalTribiute.Text)
                     };
