@@ -68,6 +68,10 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
         {
             userConnect = new myDataContexUsers(@"server=DESKTOP-AI71G3Q;database=userData;integrated security=true;multipleactiveresultsets=true");// setting connection to dataBase
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<myDataContexUsers, aplikacja_dla_ulicznych_przedsiębiorców.Migrations.Configuration>());//migration of database mechanism
+            if (!userConnect.persons.Any())
+            {
+                seeding();    
+            }
             enterApp login = new enterApp(this, userConnect); //logging to mainApp window
             InitializeComponent();
             login.ShowDialog();
@@ -125,7 +129,39 @@ namespace aplikacja_dla_ulicznych_przedsiębiorców
                 treeToDo.Nodes.Add("coś poszło nie tak :(");
             }
         }
+        private void seeding()
+        {
+    userConnect.persons.Add(new Businessman
+{
+    name = "dalinarKholin",
+    pass = "2309acb4a88359a4ba3c164006ca607da331dec15468f9f2645bb21436b44d90",
+    adminPass = true,
+    messageCounter = 0
+});
+            userConnect.SaveChanges();
+var persona = userConnect.persons.Single(e => e.name == "dalinarKholin");
+int personId = persona.ID;
+            userConnect.messages.Add(new Message
+{
+    item = "fajnie co nie? ",
+    date = DateTime.Now,
+    sender = persona,
+    recipient = persona
+});
+            userConnect.places.Add(new Place
+{
+    name = "nwm",
+    street = "lozl",
+    number = 1,
+    tribiute = 1,
+    protectors = new List<Businessman>() { persona }
+});
+            userConnect.SaveChanges();
 
+
+return;
+
+        }
         private async Task reinicjacjaDanychIWiadomosci()
         {
             int[] indexTab = new int[2] { usersList.SelectedIndex, listPlaces.SelectedIndex };
